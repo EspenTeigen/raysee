@@ -1,0 +1,16 @@
+project("raytracer")
+cmake_minimum_required(VERSION 3.24)
+
+set(TARGET_GROUP production CACHE STRING "Group to build")
+
+add_subdirectory(lib)
+
+if(TARGET_GROUP STREQUAL prod)
+    add_subdirectory(main)
+elseif(TARGET_GROUP STREQUAL test)
+    include(CTest)
+    add_subdirectory(external)
+    add_subdirectory(test)
+else()
+    message(FATAL_ERROR "Given TARGET_GROUP unknown")
+endif()
