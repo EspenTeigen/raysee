@@ -1,4 +1,4 @@
-project("raytracer")
+project(raytracer)
 cmake_minimum_required(VERSION 3.24)
 
 set(TARGET_GROUP production CACHE STRING "Group to build")
