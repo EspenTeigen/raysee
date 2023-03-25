@@ -1,14 +1,26 @@
 #include "tuples.h"
 #include <math.h>
+#include <inttypes.h>
 #define EPSILON 0.0001
 
-static inline bool epsilon_equal(float a, float b){
+static inline bool epsilon_equal(double a, double b){
     if(fabs((double)a - (double)b) < EPSILON){
         return true;
     }
     else{
         return false;
     }
+}
+
+static inline float inv_sqrt(float a){
+    union {
+		float    f;
+		uint32_t i;
+	} conv = { .f = a };
+	conv.i  = 0x5f200000 - (conv.i >> 1);
+	conv.f *= 1.68191391f - (a * 0.703952009f * conv.f * conv.f);
+    conv.f *= 1.50000036f - (a * 0.500000053f * conv.f * conv.f);
+	return conv.f;
 }
 
 vect3 tuple(float x, float y, float z, float w){
@@ -88,6 +100,22 @@ vect3 scalar_div(float scalar, vect3 *b){
         .y = b->y / scalar,
         .z = b->z / scalar,
         .w = b->w / scalar
+    };
+    return v;
+}
+
+float mag(vect3 *a){
+    return sqrt(a->x*a->x + a->y*a->y + a->z*a->z + a->w*a->w);
+}
+
+vect3 norm(vect3 * a){
+    float magnitude = mag(a); 
+    float inverse_sqrt = inv_sqrt(a->x*a->x + a->y*a->y + a->z*a->z + a->w*a->w);
+    vect3 v = {
+        .x = a->x * inverse_sqrt,
+        .y = a->y * inverse_sqrt,
+        .z = a->z * inverse_sqrt,
+        .w = 0
     };
     return v;
 }

@@ -241,6 +241,47 @@ void test_scalar_div(void){
 }
 
 
+void test_magnitude(void){
+    vect3 v1 = vector(1.0f, 0.0f, 0.0f);
+    vect3 v2 = vector(0.0f, 1.0f, 0.0f);
+    vect3 v3 = vector(0.0f, 0.0f, 1.0f);
+    vect3 v4 = vector(1.0f, 2.0f, 3.0f);
+    vect3 v5 = vector(-1.0f, -2.0f, -3.0f);
+    float mag1 = mag(&v1);
+    float mag2 = mag(&v2);
+    float mag3 = mag(&v3);
+    float mag4 = mag(&v4);
+    float mag5 = mag(&v5);
+
+
+    TEST_ASSERT_EQUAL_FLOAT(1.0f, mag1);
+    TEST_ASSERT_EQUAL_FLOAT(1.0f, mag2);
+    TEST_ASSERT_EQUAL_FLOAT(1.0f, mag3);
+    TEST_ASSERT_EQUAL_FLOAT((float)sqrt(14.0f), mag4);
+    TEST_ASSERT_EQUAL_FLOAT((float)sqrt(14.0f), mag5);
+}
+
+void test_norm(void){
+    vect3 v = vector(4.0f, 0.0f, 0.0f);
+    vect3 normalized = norm(&v);
+    v = vector(1.0f, 0.0f, 0.0f);
+
+    float precision = EPSILON;
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.x, normalized.x);
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.y, normalized.y);
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.z, normalized.z);
+
+    v = vector(1.0f ,2.0f ,3.0f);
+    normalized = norm(&v);
+    v = vector(0.26726f, 0.53452f, 0.80178f);
+
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.x, normalized.x);
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.y, normalized.y);
+    TEST_ASSERT_FLOAT_WITHIN(precision, v.z, normalized.z);
+
+  
+}
+
 int main(void) {
     UNITY_BEGIN();
 
@@ -258,6 +299,8 @@ int main(void) {
     RUN_TEST(test_scalar_mult);
     RUN_TEST(test_mult_frac);
     RUN_TEST(test_scalar_div);
+    RUN_TEST(test_magnitude);
+    RUN_TEST(test_norm);
 
     return UNITY_END();
 }
