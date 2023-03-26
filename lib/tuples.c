@@ -2,6 +2,7 @@
 #include <math.h>
 #include <inttypes.h>
 
+// Used to check if two floats is equal enough
 static inline bool epsilon_equal(double a, double b)
 {
     if (fabs((double)a - (double)b) < EPSILON)
@@ -14,6 +15,9 @@ static inline bool epsilon_equal(double a, double b)
     }
 }
 
+// fast inverse square based on the article "Improving the Accuracy of the Fast Inverse Square Root 
+// by modifying Newton-Raphson Corrections by Cezary
+// J. Walczyk et. al"
 static inline float inv_sqrt(float a)
 {
     union
@@ -27,11 +31,13 @@ static inline float inv_sqrt(float a)
     return conv.f;
 }
 
+
 vect3 tuple(float x, float y, float z, float w)
 {
     vect3 v = {x, y, z, w};
     return v;
 }
+
 
 vect3 point(float x, float y, float z)
 {
@@ -39,13 +45,15 @@ vect3 point(float x, float y, float z)
     return v;
 }
 
+
 vect3 vector(float x, float y, float z)
 {
     vect3 v = {x, y, z, 0.0f};
     return v;
 }
 
-bool vect_equal(vect3 *a, vect3 *b)
+
+bool tuple_equal(vect3 *a, vect3 *b)
 {
 
     if (epsilon_equal(a->x, b->x) &&
@@ -130,6 +138,7 @@ vect3 norm(vect3 *a)
     return v;
 }
 
+// Takes two vectors, return dot product
 float dot_p(vect3 *a, vect3 *b)
 {
     return (a->x * b->x) + (a->y * b->y) + (a->z * b->z) + (a->w * b->w);

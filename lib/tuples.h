@@ -1,3 +1,11 @@
+/*
+    My own implementation of the raytracer challenge book. 
+
+    All tuple/point/vector calculation is here
+
+    There is no null-pointer test because of speed
+*/
+
 #ifndef _TUPLES_H_
 #define _TUPLES_H_
 #include <stdbool.h>
@@ -7,9 +15,13 @@
 
 /// @brief Vector with w
 typedef struct{
+    /// @brief x-coordinate
     float x;
+    /// @brief y-coordinate
     float y;
+    /// @brief z-coordinte
     float z;
+    /// @brief w-coordinate
     float w;
 }vect3;
 
@@ -40,7 +52,7 @@ vect3 vector(float x, float y, float z);
 /// @param a vector 1
 /// @param b vector 2
 /// @return true if equal, false if not
-bool vect_equal(vect3 *a, vect3 *b);
+bool tuple_equal(vect3 *a, vect3 *b);
 
 /// @brief Add two tuples, accept both vectors and points.
 /// @param a vector 1
@@ -81,7 +93,7 @@ float mag(vect3 *a);
 /// @return vect3 containing the result
 vect3 norm(vect3 * a);
 
-/// @brief Calculate the cross product og two vectors
+/// @brief Calculate the cross product og two vectors, only works for vectors
 /// @param a vector 1
 /// @param b vector 2
 /// @return vect3 containing the cross product
