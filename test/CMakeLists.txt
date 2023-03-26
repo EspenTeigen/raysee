@@ -1,9 +1,8 @@
-add_executable(ray_app
-                tuples_test.c)
+add_executable(tuples_test_app tuples_test.c)
+target_link_libraries(tuples_test_app lib unity m)
+add_test(tuples_test tuples_test_app)
 
-target_link_libraries(ray_app
-                        lib
-                        unity
-                        m)
 
-add_test(ray_test ray_app)
+add_executable(canvas_test_app canvas_test.c)
+target_link_libraries(canvas_test_app lib unity m)
+add_test(canvas_test canvas_test_app)

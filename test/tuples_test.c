@@ -1,6 +1,6 @@
 #include <unity.h>
 #include <tuples.h>
-
+#include <canvas.h>
 
 void setUp(void) {
     
@@ -262,7 +262,7 @@ void test_cross(void){
 }
 
 void test_color_create(void){
-    color c1 = color_create(-0.5f, 0.4f, 1.7f);
+    color_t c1 = color_create(-0.5f, 0.4f, 1.7f);
 
     TEST_ASSERT_EQUAL_FLOAT(-0.5f, c1.r);
     TEST_ASSERT_EQUAL_FLOAT(0.4f, c1.g);
@@ -270,10 +270,10 @@ void test_color_create(void){
 }
 
 void test_color_add(void){
-    color c1 = color_create(0.9f, 0.6f, 0.75f);
-    color c2 = color_create(0.7f, 0.1f, 0.25f);
+    color_t c1 = color_create(0.9f, 0.6f, 0.75f);
+    color_t c2 = color_create(0.7f, 0.1f, 0.25f);
   
-    color c4 = color_add(&c1, &c2);
+    color_t c4 = color_add(&c1, &c2);
 
     TEST_ASSERT_EQUAL_FLOAT(1.6f, c4.r);
     TEST_ASSERT_EQUAL_FLOAT(0.7f, c4.g);
@@ -281,10 +281,10 @@ void test_color_add(void){
 }
 
 void test_color_sub(void){
-    color c1 = color_create(0.9f, 0.6f, 0.75f);
-    color c2 = color_create(0.7f, 0.1f, 0.25f);
+    color_t c1 = color_create(0.9f, 0.6f, 0.75f);
+    color_t c2 = color_create(0.7f, 0.1f, 0.25f);
   
-    color c4 = color_sub(&c1, &c2);
+    color_t c4 = color_sub(&c1, &c2);
 
     TEST_ASSERT_EQUAL_FLOAT(0.2f, c4.r);
     TEST_ASSERT_EQUAL_FLOAT(0.5f, c4.g);
@@ -292,10 +292,10 @@ void test_color_sub(void){
 }
 
 void test_color__scalar_mult(void){
-    color c = color_create(0.2f, 0.3f, 0.4f);
+    color_t c = color_create(0.2f, 0.3f, 0.4f);
     float scalar = 2.0f;
   
-    color c4 = color_scalar_mult(scalar, &c);
+    color_t c4 = color_scalar_mult(scalar, &c);
 
     TEST_ASSERT_EQUAL_FLOAT(0.4f, c4.r);
     TEST_ASSERT_EQUAL_FLOAT(0.6f, c4.g);
@@ -303,14 +303,39 @@ void test_color__scalar_mult(void){
 }
 
 void test_color_mult(void){
-    color c1 = color_create(1.0f, 0.2f, 0.4f);
-    color c2 = color_create(0.9f, 1.0f, 0.1f);
+    color_t c1 = color_create(1.0f, 0.2f, 0.4f);
+    color_t c2 = color_create(0.9f, 1.0f, 0.1f);
   
-    color c4 = color_mult(&c1, &c2);
+    color_t c4 = color_mult(&c1, &c2);
 
     TEST_ASSERT_EQUAL_FLOAT(0.9f, c4.r);
     TEST_ASSERT_EQUAL_FLOAT(0.2f, c4.g);
     TEST_ASSERT_EQUAL_FLOAT(0.04f, c4.b);
+}
+
+void test_canvas_create(void){
+    
+    int width = 10;
+    int height = 20;
+    canvas_t canvas = canvas_create(width, height);
+
+    color_t color[width*height];
+
+    for(int i = 0; i < width*height; i++){
+        color[i].r = 0.0f;
+        color[i].g = 0.0f;
+        color[i].b = 0.0f;
+    }
+
+    for(int i = 0; i < width*height; i++){
+        TEST_ASSERT_EQUAL_FLOAT(color[i].r, canvas.pixel[i].r);
+        TEST_ASSERT_EQUAL_FLOAT(color[i].g, canvas.pixel[i].g);
+        TEST_ASSERT_EQUAL_FLOAT(color[i].b, canvas.pixel[i].b);
+    }
+
+
+    TEST_ASSERT_EQUAL(10, width);
+    TEST_ASSERT_EQUAL(20, height);
 }
 
 int main(void) {
