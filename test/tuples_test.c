@@ -127,8 +127,9 @@ void test_vect3_add_tuple(void){
     TEST_ASSERT_EQUAL_FLOAT(v1.y, res.y);
     TEST_ASSERT_EQUAL_FLOAT(v1.z, res.z);
     TEST_ASSERT_EQUAL_FLOAT(v1.w, res.w);
-
 }
+
+
 
 
 void test_vect3_sub_two_points(void){
@@ -265,7 +266,7 @@ void test_norm(void){
     vect3 v = vector(4.0f, 0.0f, 0.0f);
     vect3 normalized = norm(&v);
     v = vector(1.0f, 0.0f, 0.0f);
-
+    
     float precision = EPSILON;
     TEST_ASSERT_FLOAT_WITHIN(precision, v.x, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(precision, v.y, normalized.y);
@@ -278,8 +279,35 @@ void test_norm(void){
     TEST_ASSERT_FLOAT_WITHIN(precision, v.x, normalized.x);
     TEST_ASSERT_FLOAT_WITHIN(precision, v.y, normalized.y);
     TEST_ASSERT_FLOAT_WITHIN(precision, v.z, normalized.z);
+}
 
-  
+void test_dot(void){
+    vect3 v1 = vector(1.0f, 2.0f, 3.0f);
+    vect3 v2 = vector(2.0f, 3.0f, 4.0f);
+
+    float d = dot_p(&v1, &v2);
+
+   TEST_ASSERT_EQUAL_FLOAT(20.0f, d);
+}
+
+void test_cross(void){
+    vect3 v1 = vector(1.0f, 2.0f, 3.0f);
+    vect3 v2 = vector(2.0f, 3.0f, 4.0f);
+
+    vect3 c1 = cross_p(&v1, &v2);
+    vect3 c2 = cross_p(&v2, &v1);
+
+    vect3 v3 = vector(-1.0f, 2.0f, -1.0f);
+    vect3 v4 = vector(1.0f, -2.0f, 1.0f);
+
+    //TEST_ASSERT_EQUAL_FLOAT(v3.x, c1.x);
+    //TEST_ASSERT_EQUAL_FLOAT(v3.y, c1.y);
+    //TEST_ASSERT_EQUAL_FLOAT(v3.z, c1.z);
+//
+    //TEST_ASSERT_EQUAL_FLOAT(v4.x, c2.x);
+    //TEST_ASSERT_EQUAL_FLOAT(v4.y, c2.y);
+    //TEST_ASSERT_EQUAL_FLOAT(v4.z, c2.z);
+    
 }
 
 int main(void) {
@@ -301,6 +329,7 @@ int main(void) {
     RUN_TEST(test_scalar_div);
     RUN_TEST(test_magnitude);
     RUN_TEST(test_norm);
-
+    RUN_TEST(test_dot);
+    RUN_TEST(test_cross);
     return UNITY_END();
 }
