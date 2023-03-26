@@ -164,8 +164,8 @@ bool is_point(vect3 *p)
 
 //------------ Colors-------------------
 
-color color_create(float r, float g, float b){
-    color c = {
+color_t color_create(float r, float g, float b){
+    color_t c = {
         .r = r,
         .g = g,
         .b = b
@@ -173,8 +173,8 @@ color color_create(float r, float g, float b){
     return c;
 }
 
-color color_add(color *c1, color *c2){
-    color c_ret = {
+color_t color_add(color_t *c1, color_t *c2){
+    color_t c_ret = {
         .r = c1->r + c2->r,
         .g = c1->g + c2->g,
         .b = c1->b + c2->b
@@ -182,8 +182,8 @@ color color_add(color *c1, color *c2){
     return c_ret;
 }
 
-color color_sub(color *c1, color *c2){
-    color c_ret = {
+color_t color_sub(color_t *c1, color_t *c2){
+    color_t c_ret = {
         .r = c1->r - c2->r,
         .g = c1->g - c2->g,
         .b = c1->b - c2->b
@@ -191,8 +191,8 @@ color color_sub(color *c1, color *c2){
     return c_ret;
 }
 
-color color_scalar_mult(float scalar, color *c){
-    color c_ret = {
+color_t color_scalar_mult(float scalar, color_t *c){
+    color_t c_ret = {
         .r = c->r * scalar,
         .g = c->g * scalar,
         .b = c->b * scalar
@@ -200,8 +200,8 @@ color color_scalar_mult(float scalar, color *c){
     return c_ret;
 }
 
-color color_mult(color *c1, color *c2){
-    color c_ret = {
+color_t color_mult(color_t *c1, color_t *c2){
+    color_t c_ret = {
         .r = c1->r * c2->r,
         .g = c1->g * c2->g,
         .b = c1->b * c2->b

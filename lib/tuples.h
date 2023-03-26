@@ -125,37 +125,37 @@ typedef struct{
     float r;
     float g;
     float b;
-}color;
+}color_t;
 
 /// @brief create a color
 /// @param r red component
 /// @param g green component
 /// @param b blue component
 /// @return color struct containing colors
-color color_create(float r, float g, float b);
+color_t color_create(float r, float g, float b);
 
 /// @brief add two colors together
 /// @param c1 color 1
 /// @param c2 color 2
 /// @return color containing result
-color color_add(color *c1, color *c2);
+color_t color_add(color_t *c1, color_t *c2);
 
 /// @brief subtract a color from another
 /// @param c1 color to be subtracted from
 /// @param c2 color to subtract
 /// @return color containing result
-color color_sub(color *c1, color *c2);
+color_t color_sub(color_t *c1, color_t *c2);
 
 /// @brief multiply a scalar with a color
 /// @param scalar how much to scale with
 /// @param c color to scale
 /// @return color containg result
-color color_scalar_mult(float scalar, color *c);
+color_t color_scalar_mult(float scalar, color_t *c);
 
 /// @brief multiply two colors
 /// @param c1 color 1
 /// @param c2 color 2
 /// @return color containing the result
-color color_mult(color *c1, color *c2);
+color_t color_mult(color_t *c1, color_t *c2);
 
 #endif // _TUPLES_H_
