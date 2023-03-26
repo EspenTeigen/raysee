@@ -26,6 +26,9 @@ typedef struct{
 }vect3;
 
 
+// Used to separate between vector and points
+typedef vect3 point3;
+
 /// @brief Create a tuple
 /// @param x x-coordinate
 /// @param y y coordinate
@@ -114,5 +117,45 @@ bool is_vector(vect3 *v);
 /// @param p the point to check
 /// @return bool true if it is a vector
 bool is_point(vect3 *p);
+
+//----------- colors ---------------
+
+/// @brief vector of color
+typedef struct{
+    float r;
+    float g;
+    float b;
+}color;
+
+/// @brief create a color
+/// @param r red component
+/// @param g green component
+/// @param b blue component
+/// @return color struct containing colors
+color color_create(float r, float g, float b);
+
+/// @brief add two colors together
+/// @param c1 color 1
+/// @param c2 color 2
+/// @return color containing result
+color color_add(color *c1, color *c2);
+
+/// @brief subtract a color from another
+/// @param c1 color to be subtracted from
+/// @param c2 color to subtract
+/// @return color containing result
+color color_sub(color *c1, color *c2);
+
+/// @brief multiply a scalar with a color
+/// @param scalar how much to scale with
+/// @param c color to scale
+/// @return color containg result
+color color_scalar_mult(float scalar, color *c);
+
+/// @brief multiply two colors
+/// @param c1 color 1
+/// @param c2 color 2
+/// @return color containing the result
+color color_mult(color *c1, color *c2);
 
 #endif // _TUPLES_H_

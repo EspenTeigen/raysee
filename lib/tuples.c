@@ -15,7 +15,7 @@ static inline bool epsilon_equal(double a, double b)
     }
 }
 
-// fast inverse square based on the article "Improving the Accuracy of the Fast Inverse Square Root 
+// fast inverse square root based on the article "Improving the Accuracy of the Fast Inverse Square Root 
 // by modifying Newton-Raphson Corrections by Cezary
 // J. Walczyk et. al"
 static inline float inv_sqrt(float a)
@@ -160,4 +160,51 @@ bool is_vector(vect3 *v)
 bool is_point(vect3 *p)
 {
     return epsilon_equal(1.0f, p->w);
+}
+
+//------------ Colors-------------------
+
+color color_create(float r, float g, float b){
+    color c = {
+        .r = r,
+        .g = g,
+        .b = b
+    };
+    return c;
+}
+
+color color_add(color *c1, color *c2){
+    color c_ret = {
+        .r = c1->r + c2->r,
+        .g = c1->g + c2->g,
+        .b = c1->b + c2->b
+    };
+    return c_ret;
+}
+
+color color_sub(color *c1, color *c2){
+    color c_ret = {
+        .r = c1->r - c2->r,
+        .g = c1->g - c2->g,
+        .b = c1->b - c2->b
+    };
+    return c_ret;
+}
+
+color color_scalar_mult(float scalar, color *c){
+    color c_ret = {
+        .r = c->r * scalar,
+        .g = c->g * scalar,
+        .b = c->b * scalar
+    };
+    return c_ret;
+}
+
+color color_mult(color *c1, color *c2){
+    color c_ret = {
+        .r = c1->r * c2->r,
+        .g = c1->g * c2->g,
+        .b = c1->b * c2->b
+    };
+    return c_ret;
 }
