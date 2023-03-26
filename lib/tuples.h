@@ -21,6 +21,8 @@ vect3 scalar_mult(float scalar, vect3 *a);
 vect3 scalar_div(float scalar, vect3 *a);
 float mag(vect3 *a);
 vect3 norm(vect3 * a);
+vect3 cross_p(vect3 *a, vect3 *b);
+float dot_p(vect3 *a, vect3 *b);
 bool is_vector(vect3 *v);
 bool is_point(vect3 *p);
 
