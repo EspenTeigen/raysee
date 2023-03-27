@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "tuples.c"
+#include "canvas.h"
 
 void projectile_path(void);
 
