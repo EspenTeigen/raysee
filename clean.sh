@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cd build
 rm -r CMakeFiles
 rm -r external
 rm -r main
