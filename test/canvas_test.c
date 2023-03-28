@@ -58,11 +58,13 @@ void test_canvas_create_ppm(void){
 
     canvas_t* canvas = canvas_create(5, 3);
 
-    color_t color1 = color_create(1.0f, 0.9f, 0.8f);
-    color_t color2 = color_create(0.1f, 0.2f, 0.3f);
+    color_t c1 = color_create(1.5f, 0.0f, 0.0f);
+    color_t c2 = color_create(0.0f, 0.5f, 0.0f);
+    color_t c3 = color_create(-0.5f, 0.0f, 1.0f);
 
-    canvas_write_pixel(canvas, 0, 0, &color1);
-    canvas_write_pixel(canvas, 4, 2, &color2);
+    canvas_write_pixel(canvas, 0, 0, &c1);
+    canvas_write_pixel(canvas, 2, 1, &c2);
+    canvas_write_pixel(canvas, 4, 2, &c3);
 
     canvas_to_ppm(canvas, "../../faen.ppm");
     canvas_delete(&canvas);

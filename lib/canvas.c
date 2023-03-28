@@ -4,10 +4,10 @@
 #include <math.h>
 
 #define MAX_COLOR_VALUE 255L
-#define MIN_COLOR_VALUE 0l
+#define MIN_COLOR_VALUE 0L
+const long MAX_LINE_LENGTH = 70;
 
-
-static inline float map_and_clamp_color(float color){
+float map_and_clamp_color(float color){
 
     color = color * MAX_COLOR_VALUE;
 
@@ -15,25 +15,28 @@ static inline float map_and_clamp_color(float color){
         color = MAX_COLOR_VALUE;
     }
     else if(color < MIN_COLOR_VALUE){
-        color = MAX_COLOR_VALUE;
+        color = MIN_COLOR_VALUE;
     }
     return (float)round((double)color);
 }
 
 
-static inline void make_ppm_header(FILE *fp, long width, long height){
+void make_ppm_header(FILE *fp, long width, long height){
     fprintf(fp, "P3\n");
     fprintf(fp, "%ld %ld\n%ld\n", width, height, MAX_COLOR_VALUE);
 }
 
-static inline void print_pixels(canvas_t *canvas, long width, long height, FILE *fp){
+void print_pixels(canvas_t *canvas, long width, long height, FILE *fp){
+    int num_char = 0;
     for(long y = 0; y < height; y++){
         for(long x = 0; x < width; x++){
             long pos = x + canvas->width * y;
-            fprintf(fp, "%i %i %i ", (int)canvas->pixels[pos].r, (int)canvas->pixels[pos].g, (int)canvas->pixels[pos].b);
-    
+            num_char += fprintf(fp, "%i %i %i ", (int)canvas->pixels[pos].r, (int)canvas->pixels[pos].g, (int)canvas->pixels[pos].b);
+            if(num_char >= (MAX_LINE_LENGTH - 6)){
+               fprintf(fp, "\n");
+               num_char = 0;
+            }
         }
-        fprintf(fp, "\n");
     }
 }   
 
@@ -61,7 +64,6 @@ void canvas_write_pixel(canvas_t *canvas, long x, long y, color_t *color){
     long pos = x + canvas->width * y;
 
     if(pos <= (canvas->width*canvas->height)){
-    
         canvas->pixels[pos].r = color->r;
         canvas->pixels[pos].g = color->g;
         canvas->pixels[pos].b = color->b;
