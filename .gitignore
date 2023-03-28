@@ -1,13 +1,1 @@
-build/CMakeFiles
-build/external
-build/lib
-build/main
-build/test
-build/Testing
-build/.ninja_deps
-build/.ninja_log
-build/build.ninja
-build/cmake_install.cmake
-build/CMakeCache.txt
-build/CTestTestfile.cmake
-build/DartConfiguration.tcl
+build

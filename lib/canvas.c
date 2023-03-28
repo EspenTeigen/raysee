@@ -29,7 +29,9 @@ static inline void make_ppm_header(FILE *fp, long width, long height){
 static inline void print_pixels(canvas_t *canvas, long width, long height, FILE *fp){
     for(long y = 0; y < height; y++){
         for(long x = 0; x < width; x++){
-            fprintf(fp, "%i %i %i ", (int)canvas->pixels[x*y].r, (int)canvas->pixels[x*y].g, (int)canvas->pixels[x*y].b);
+            long pos = x + canvas->width * y;
+            fprintf(fp, "%i %i %i ", (int)canvas->pixels[pos].r, (int)canvas->pixels[pos].g, (int)canvas->pixels[pos].b);
+    
         }
         fprintf(fp, "\n");
     }
@@ -58,9 +60,13 @@ void canvas_write_pixel(canvas_t *canvas, long x, long y, color_t *color){
     
     long pos = x + canvas->width * y;
 
-    canvas->pixels[pos].r = color->r;
-    canvas->pixels[pos].g = color->g;
-    canvas->pixels[pos].b = color->b;
+    if(pos <= (canvas->width*canvas->height)){
+    
+        canvas->pixels[pos].r = color->r;
+        canvas->pixels[pos].g = color->g;
+        canvas->pixels[pos].b = color->b;
+    }
+    
 }
 
 void canvas_to_ppm(canvas_t *canvas, const char* canvas_name){
@@ -72,11 +78,10 @@ void canvas_to_ppm(canvas_t *canvas, const char* canvas_name){
     }
 
     FILE *fp;
-    fp = fopen(canvas_name, "w+");
-
-    make_ppm_header(fp, canvas->width, canvas->height);
-    print_pixels(canvas, canvas->width, canvas->height, fp);
-
-    fclose(fp);
-
+    fp = fopen(canvas_name, "w");
+    if(fp){
+        make_ppm_header(fp, canvas->width, canvas->height);
+        print_pixels(canvas, canvas->width, canvas->height, fp);
+        fclose(fp);
+    }
 }

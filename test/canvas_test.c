@@ -44,7 +44,7 @@ void test_canvas_create(void){
 
 void test_canvas_write_pixel(void){
     canvas_t* canvas = canvas_create(CANVAS_WIDTH, CANVAS_HEIGHT);
-    color_t red = color_create(1, 0, 0);
+    color_t red = color_create(1.0f, 0.0f, 0.0f);
 
     canvas_write_pixel(canvas, 2, 3, &red);
 
@@ -57,7 +57,15 @@ void test_canvas_write_pixel(void){
 void test_canvas_create_ppm(void){
 
     canvas_t* canvas = canvas_create(5, 3);
-    canvas_to_ppm(canvas, "/home/espen/codes/raysee/faen.ppm");
+
+    color_t color1 = color_create(1.0f, 0.9f, 0.8f);
+    color_t color2 = color_create(0.1f, 0.2f, 0.3f);
+
+    canvas_write_pixel(canvas, 0, 0, &color1);
+    canvas_write_pixel(canvas, 4, 2, &color2);
+
+    canvas_to_ppm(canvas, "../../faen.ppm");
+    canvas_delete(&canvas);
 }
 
 int main(void) {
