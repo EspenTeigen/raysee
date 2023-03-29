@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cd build/*
+cd build/
+rm -r *
 

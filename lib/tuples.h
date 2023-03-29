@@ -6,8 +6,8 @@
     There is no null-pointer test because of speed
 */
 
-#ifndef _TUPLES_H_
-#define _TUPLES_H_
+#ifndef TUPLES_H_
+#define TUPLES_H_
 #include <stdbool.h>
 
 /// Max error between floats

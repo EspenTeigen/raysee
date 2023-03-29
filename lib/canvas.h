@@ -1,11 +1,11 @@
-#ifndef _CANVAS_H_
-#define _CANVAS_H_
+#ifndef CANVAS_H_
+#define CANVAS_H_
 #include "tuples.h"
 #include <stddef.h>
 #include <tuples.h>
 
 
-typedef struct {
+typedef struct _canvas_t{
     long width;
     long height;
     color_t pixels[];

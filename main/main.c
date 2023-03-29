@@ -7,42 +7,44 @@ void projectile_path(void);
 void test_canvas(void);
 
 int main(){
-    projectile_path();
-    //test_canvas();
+    printf("start\n");
+    //projectile_path();
+    test_canvas();
 return 0;
 }
 
 void test_canvas(void){
 
+    long width = 3L;
+    long height = 5L;
+
+    color_t color = color_create(0.0, 0.5f, 1.0f);
+
     float startTime = (float)clock()/CLOCKS_PER_SEC;
+    canvas_t *canvas = canvas_create(width, height);
 
-    canvas_t *canvas = canvas_create(1000, 1000);
-    color_t r = color_create(0.9f, 0.5f, 1.0f);
-    color_t g = color_create(0.0f, 1.0f, 0.0f);
-    color_t b = color_create(1.0f, 1.0f, 1.0f);
-
-    canvas_write_pixel(canvas, 0, 0, &r);
-    canvas_write_pixel(canvas, 0, 1, &r);
-    canvas_write_pixel(canvas, 1, 1, &b);
-    
+    for(long j = 0; j < height; j++){
+        for(long i = 0; i < width; i++){
+            canvas_write_pixel(canvas, i, j, &color);
+        }
+    }
 
     float endTime = (float)clock()/CLOCKS_PER_SEC;
-    printf("%f", endTime - startTime);
-    for(int i = 0; i < 1000*1000; i++){
-        canvas_write_pixel(canvas, i, i, &r);
-    }
-    long x = 0;
-    for(int i = 1000; i > 0; i--){
-        x++;
-        canvas_write_pixel(canvas, x, i, &r);
-    }
+
+
+    printf("runtime canvas create: %f\n", endTime - startTime);
+
+    startTime = (float)clock()/CLOCKS_PER_SEC;
     canvas_to_ppm(canvas, "../../test.ppm");
+    endTime = (float)clock()/CLOCKS_PER_SEC;
+    printf("runtime canvas write: %f\n", endTime - startTime);
+    
     
 }
 
 void projectile_path(void){
     
-    canvas_t *canvas = canvas_create(900, 550);
+    canvas_t *canvas = canvas_create(2048, 1152);
     color_t yellow = color_create(1.0f, 1.0f, 0.0f);
 
     struct _projectile{
@@ -84,6 +86,4 @@ void projectile_path(void){
     }
     canvas_to_ppm(canvas, "../../test.ppm");
     canvas_delete(&canvas);
-
-
 }
