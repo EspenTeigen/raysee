@@ -16,13 +16,13 @@
 /// @brief Vector with w
 typedef struct{
     /// @brief x-coordinate
-    float x;
+    double x;
     /// @brief y-coordinate
-    float y;
+    double y;
     /// @brief z-coordinte
-    float z;
+    double z;
     /// @brief w-coordinate
-    float w;
+    double w;
 }vect3;
 
 
@@ -35,21 +35,21 @@ typedef vect3 point3;
 /// @param z z-coordinate
 /// @param w w-coordinate 0 if vector and 1 if point
 /// @return vect3 struct with x, y, z, w coordinates
-vect3 tuple(float x, float y, float z, float w);
+vect3 tuple(double x, double y, double z, double w);
 
 /// @brief Create a point
 /// @param x x-coordinate
 /// @param y y coordinate
 /// @param z z-coordinate
 /// @return a vect3 with w=1.0f
-vect3 point(float x, float y, float z);
+vect3 point(double x, double y, double z);
 
 /// @brief Create a vector
 /// @param x x-coordinate
 /// @param y y coordinate
 /// @param z z-coordinate
 /// @return vect3 vector with w=0.0f
-vect3 vector(float x, float y, float z);
+vect3 vector(double x, double y, double z);
 
 /// @brief Check if two vectors are equal
 /// @param a vector 1
@@ -78,18 +78,18 @@ vect3 negate(vect3 *a);
 /// @param scalar A scalar
 /// @param a a vector
 /// @return vect3 containing the result
-vect3 scalar_mult(float scalar, vect3 *a);
+vect3 scalar_mult(double scalar, vect3 *a);
 
 /// @brief Divide a scalar with a vector
 /// @param scalar A scalar
 /// @param a a vector
 /// @return vect3 containing the result
-vect3 scalar_div(float scalar, vect3 *a);
+vect3 scalar_div(double scalar, vect3 *a);
 
 /// @brief Find the magnitude of a vector
 /// @param a the vector to normalize
 /// @return float with the magnitude
-float mag(vect3 *a);
+double mag(vect3 *a);
 
 /// @brief Normalize a vector
 /// @param a the vector to normalize 
@@ -106,7 +106,7 @@ vect3 cross_p(vect3 *a, vect3 *b);
 /// @param a vector 1
 /// @param b vector 2
 /// @return float with the dot product
-float dot_p(vect3 *a, vect3 *b);
+double dot_p(vect3 *a, vect3 *b);
 
 /// @brief Check if a tuple is a vector
 /// @param v the tuple to check
@@ -122,9 +122,9 @@ bool is_point(vect3 *p);
 
 /// @brief vector of color
 typedef struct{
-    float r;
-    float g;
-    float b;
+    double r;
+    double g;
+    double b;
 }color_t;
 
 /// @brief create a color
@@ -132,7 +132,7 @@ typedef struct{
 /// @param g green component
 /// @param b blue component
 /// @return color struct containing colors
-color_t color_create(float r, float g, float b);
+color_t color_create(double r, double g, double b);
 
 /// @brief add two colors together
 /// @param c1 color 1
@@ -150,7 +150,7 @@ color_t color_sub(color_t *c1, color_t *c2);
 /// @param scalar how much to scale with
 /// @param c color to scale
 /// @return color containg result
-color_t color_scalar_mult(float scalar, color_t *c);
+color_t color_scalar_mult(double scalar, color_t *c);
 
 /// @brief multiply two colors
 /// @param c1 color 1

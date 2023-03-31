@@ -8,17 +8,17 @@ void test_canvas(void);
 
 int main(){
     printf("start\n");
-    //projectile_path();
-    test_canvas();
+    projectile_path();
+  //  test_canvas();
 return 0;
 }
 
 void test_canvas(void){
 
-    long width = 3L;
-    long height = 5L;
+    long width = 1000L;
+    long height = 1000L;
 
-    color_t color = color_create(0.0, 0.5f, 1.0f);
+    color_t color = color_create(0.0, 0.5, 1.0);
 
     float startTime = (float)clock()/CLOCKS_PER_SEC;
     canvas_t *canvas = canvas_create(width, height);
@@ -35,7 +35,7 @@ void test_canvas(void){
     printf("runtime canvas create: %f\n", endTime - startTime);
 
     startTime = (float)clock()/CLOCKS_PER_SEC;
-    canvas_to_ppm(canvas, "../../test.ppm");
+    canvas_to_ppm(canvas, "../../helvete.ppm");
     endTime = (float)clock()/CLOCKS_PER_SEC;
     printf("runtime canvas write: %f\n", endTime - startTime);
     
@@ -45,7 +45,7 @@ void test_canvas(void){
 void projectile_path(void){
     
     canvas_t *canvas = canvas_create(2048, 1152);
-    color_t yellow = color_create(1.0f, 1.0f, 0.0f);
+    color_t yellow = color_create(1.0, 1.0, 0.0);
 
     struct _projectile{
         point3 position;
@@ -58,14 +58,14 @@ void projectile_path(void){
     }environment;
 
     // Set up initial conditions
-    projectile.position = point(0.0f, 1.0f, 0.0f);
-    vect3 v = vector(1.0f, 1.8f, 0.0f);
+    projectile.position = point(0.0, 1.0, 0.0);
+    vect3 v = vector(1.0, 1.8, 0.0);
     v = norm(&v);
-    projectile.velocity = scalar_mult(11.25f, &v) ;
+    projectile.velocity = scalar_mult(11.25, &v) ;
 
     // Set up environmental factors
-    environment.gravity = vector(0.0f, -0.1f, 0.0f);
-    environment.wind = vector(-0.01f, 0.0f, 0.0f);
+    environment.gravity = vector(0.0, -0.1, 0.0);
+    environment.wind = vector(-0.01, 0.0, 0.0);
 
     int tick = 0;
 
@@ -78,12 +78,8 @@ void projectile_path(void){
         long y_pos = canvas->height - projectile.position.y;
 
         canvas_write_pixel(canvas, projectile.position.x, y_pos, &yellow);
-        printf("x = %f, y = %f, z=%f, ticks = %i\n", 
-            projectile.position.x,  
-            projectile.position.y, 
-            projectile.position.z, 
-            tick);
+     
     }
-    canvas_to_ppm(canvas, "../../test.ppm");
+    canvas_to_ppm(canvas, "../../faen.ppm");
     canvas_delete(&canvas);
 }

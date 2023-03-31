@@ -2,7 +2,7 @@
 #include <math.h>
 #include <inttypes.h>
 
-// Used to check if two floats is equal enough
+// Used to check if two doubles is equal enough
 static inline bool epsilon_equal(double a, double b)
 {
     if (fabs((double)a - (double)b) < EPSILON)
@@ -15,38 +15,28 @@ static inline bool epsilon_equal(double a, double b)
     }
 }
 
-// fast inverse square root based on the article "Improving the Accuracy of the Fast Inverse Square Root 
-// by modifying Newton-Raphson Corrections by Cezary
-// J. Walczyk et. al"
-static inline float inv_sqrt(float a)
+
+static inline double inv_sqrt(double a)
 {
-    union
-    {
-        float f;
-        uint32_t i;
-    } conv = {.f = a};
-    conv.i = 0x5f200000 - (conv.i >> 1);
-    conv.f *= 1.68191391f - (a * 0.703952009f * conv.f * conv.f);
-    conv.f *= 1.50000036f - (a * 0.500000053f * conv.f * conv.f);
-    return conv.f;
+    return 1/sqrt(a);
 }
 
 
-vect3 tuple(float x, float y, float z, float w)
+vect3 tuple(double x, double y, double z, double w)
 {
     vect3 v = {x, y, z, w};
     return v;
 }
 
 
-vect3 point(float x, float y, float z)
+vect3 point(double x, double y, double z)
 {
     vect3 v = {x, y, z, 1.0f};
     return v;
 }
 
 
-vect3 vector(float x, float y, float z)
+vect3 vector(double x, double y, double z)
 {
     vect3 v = {x, y, z, 0.0f};
     return v;
@@ -102,7 +92,7 @@ vect3 negate(vect3 *a)
     return v;
 }
 
-vect3 scalar_mult(float scalar, vect3 *b)
+vect3 scalar_mult(double scalar, vect3 *b)
 {
     vect3 v = {
         .x = b->x * scalar,
@@ -112,7 +102,7 @@ vect3 scalar_mult(float scalar, vect3 *b)
     return v;
 }
 
-vect3 scalar_div(float scalar, vect3 *b)
+vect3 scalar_div(double scalar, vect3 *b)
 {
     vect3 v = {
         .x = b->x / scalar,
@@ -122,14 +112,14 @@ vect3 scalar_div(float scalar, vect3 *b)
     return v;
 }
 
-float mag(vect3 *a)
+double mag(vect3 *a)
 {
     return sqrt(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
 }
 
 vect3 norm(vect3 *a)
 {
-    float inverse_sqrt = inv_sqrt(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+    double inverse_sqrt = inv_sqrt(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
     vect3 v = {
         .x = a->x * inverse_sqrt,
         .y = a->y * inverse_sqrt,
@@ -139,7 +129,7 @@ vect3 norm(vect3 *a)
 }
 
 // Takes two vectors, return dot product
-float dot_p(vect3 *a, vect3 *b)
+double dot_p(vect3 *a, vect3 *b)
 {
     return (a->x * b->x) + (a->y * b->y) + (a->z * b->z) + (a->w * b->w);
 }
@@ -164,7 +154,7 @@ bool is_point(vect3 *p)
 
 //------------ Colors-------------------
 
-color_t color_create(float r, float g, float b){
+color_t color_create(double r, double g, double b){
     color_t c = {
         .r = r,
         .g = g,
@@ -191,7 +181,7 @@ color_t color_sub(color_t *c1, color_t *c2){
     return c_ret;
 }
 
-color_t color_scalar_mult(float scalar, color_t *c){
+color_t color_scalar_mult(double scalar, color_t *c){
     color_t c_ret = {
         .r = c->r * scalar,
         .g = c->g * scalar,
