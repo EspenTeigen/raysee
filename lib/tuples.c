@@ -2,8 +2,9 @@
 #include <math.h>
 #include <inttypes.h>
 
+
 // Used to check if two doubles is equal enough
-static inline bool epsilon_equal(double a, double b)
+bool epsilon_equal(double a, double b)
 {
     if (fabs((double)a - (double)b) < EPSILON)
     {
@@ -15,41 +16,40 @@ static inline bool epsilon_equal(double a, double b)
     }
 }
 
-
-static inline double inv_sqrt(double a)
+void tuple(double x, double y, double z, double w, vect3 res)
 {
-    return 1/sqrt(a);
+    res[X] = x;
+    res[Y] = y;
+    res[Z] = z;
+    res[W] = w;
 }
 
 
-vect3 tuple(double x, double y, double z, double w)
+void point(double x, double y, double z, vect3 res)
 {
-    vect3 v = {x, y, z, w};
-    return v;
+    res[X] = x;
+    res[Y] = y;
+    res[Z] = z;
+    res[W] = 1.0;
 }
 
 
-vect3 point(double x, double y, double z)
+void vector(double x, double y, double z, vect3 res)
 {
-    vect3 v = {x, y, z, 1.0f};
-    return v;
+    res[X] = x;
+    res[Y] = y;
+    res[Z] = z;
+    res[W] = 0.0;
 }
 
 
-vect3 vector(double x, double y, double z)
-{
-    vect3 v = {x, y, z, 0.0f};
-    return v;
-}
-
-
-bool tuple_equal(vect3 *a, vect3 *b)
+bool tuple_equal(vect3 a, vect3 b)
 {
 
-    if (epsilon_equal(a->x, b->x) &&
-        epsilon_equal(a->y, b->y) &&
-        epsilon_equal(a->z, b->z) &&
-        epsilon_equal(a->w, b->w))
+    if (epsilon_equal(a[X], b[X]) &&
+        epsilon_equal(a[Y], b[Y]) &&
+        epsilon_equal(a[Z], b[Z]) &&
+        epsilon_equal(a[W], b[W]))
     {
 
         return true;
@@ -60,141 +60,125 @@ bool tuple_equal(vect3 *a, vect3 *b)
     }
 }
 
-vect3 add_tuple(vect3 *a, vect3 *b)
-{
 
-    vect3 res = {
-        .x = a->x + b->x,
-        .y = a->y + b->y,
-        .z = a->z + b->z,
-        .w = a->w + b->w};
-    return res;
+void add_tuple(vect3 a, vect3 b, vect3 res)
+{
+        res[X] = a[X] + b[X];
+        res[Y] = a[Y] + b[Y];
+        res[Z] = a[Z] + b[Z];
+        res[W] = a[W] + b[W];
 }
 
-vect3 sub_two_tuples(vect3 *a, vect3 *b)
-{
 
-    vect3 res = {
-        .x = a->x - b->x,
-        .y = a->y - b->y,
-        .z = a->z - b->z,
-        .w = a->w - b->w};
-    return res;
+void sub_two_tuples(vect3 a, vect3 b, vect3 res)
+{
+        res[X] = a[X] - b[X],
+        res[Y] = a[Y] - b[Y],
+        res[Z] = a[Z] - b[Z],
+        res[W] = a[W] - b[W];
 }
 
-vect3 negate(vect3 *a)
+void negate(vect3 a, vect3 res)
 {
-    vect3 v = {
-        .x = -1.0f * a->x,
-        .y = -1.0f * a->y,
-        .z = -1.0f * a->z,
-        .w = -1.0f * a->w};
-    return v;
+    res[X] = -1.0f * a[X];
+    res[Y] = -1.0f * a[Y];
+    res[Z] = -1.0f * a[Z];
+    res[W] = -1.0f * a[W];
 }
 
-vect3 scalar_mult(double scalar, vect3 *b)
+void scalar_mult(double scalar, vect3 b, vect3 res)
 {
-    vect3 v = {
-        .x = b->x * scalar,
-        .y = b->y * scalar,
-        .z = b->z * scalar,
-        .w = b->w * scalar};
-    return v;
+    res[X] = b[X] * scalar;
+    res[Y] = b[Y] * scalar;
+    res[Z] = b[Z] * scalar;
+    res[W] = b[W] * scalar;
 }
 
-vect3 scalar_div(double scalar, vect3 *b)
+void scalar_div(double scalar, vect3 b, vect3 res)
 {
-    vect3 v = {
-        .x = b->x / scalar,
-        .y = b->y / scalar,
-        .z = b->z / scalar,
-        .w = b->w / scalar};
-    return v;
+    res[X] = b[X] / scalar;
+    res[Y] = b[Y] / scalar;
+    res[Z] = b[Z] / scalar;
+    res[W] = b[W] / scalar;
 }
 
-double mag(vect3 *a)
+double mag(vect3 a)
 {
-    return sqrt(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
+    return sqrt(pow(a[X], 2.0) + pow(a[Y], 2.0) + pow(a[Z], 2.0) + pow(a[W], 2.0));
 }
 
-vect3 norm(vect3 *a)
+void norm(vect3 a, vect3 res)
 {
-    double inverse_sqrt = inv_sqrt(a->x * a->x + a->y * a->y + a->z * a->z + a->w * a->w);
-    vect3 v = {
-        .x = a->x * inverse_sqrt,
-        .y = a->y * inverse_sqrt,
-        .z = a->z * inverse_sqrt,
-        .w = a->w * inverse_sqrt};
-    return v;
+   
+    for(int i = 0; i < 4; i++){
+
+        double mag_calc = mag(a);
+
+        if(epsilon_equal(a[i], 0.0) == true){
+            res[i] = 0;
+        }
+        else{
+            res[i] = a[i] / mag_calc;
+        }
+    }
 }
 
 // Takes two vectors, return dot product
-double dot_p(vect3 *a, vect3 *b)
+double dot_p(vect3 a, vect3 b)
 {
-    return (a->x * b->x) + (a->y * b->y) + (a->z * b->z) + (a->w * b->w);
+    return (a[X] * b[X]) + (a[Y] * b[Y]) + (a[Z] * b[Z]) + (a[W] * b[W]);
 }
 
-vect3 cross_p(vect3 *a, vect3 *b){
-    vect3 v = vector(
-                    (a->y * b->z) - (a->z * b->y),
-                    (a->z * b->x) - (a->x * b->z),   
-                    (a->x * b->y) - (a->y * b->x));
-    return v;
+void cross_p(vect3 a, vect3 b, vect3 res){
+    res[X] = (a[Y] * b[Z]) - (a[Z] * b[Y]);
+    res[Y] = (a[Z] * b[X]) - (a[X] * b[Z]);   
+    res[Z] = (a[X] * b[Y]) - (a[Y] * b[X]);
+    res[W] = 0.0;
 }
 
-bool is_vector(vect3 *v)
+bool is_vector(vect3 v)
 {
-    return epsilon_equal(0.0f, v->w);
+    return epsilon_equal(0.0f, v[W]);
 }
 
-bool is_point(vect3 *p)
+bool is_point(vect3 p)
 {
-    return epsilon_equal(1.0f, p->w);
+    return epsilon_equal(1.0, p[W]);
 }
 
 //------------ Colors-------------------
 
-color_t color_create(double r, double g, double b){
-    color_t c = {
-        .r = r,
-        .g = g,
-        .b = b
-    };
-    return c;
+void color_create(double r, double g, double b, color_t *res){
+
+    res->r = r;
+    res->g = g;
+    res->b = b;
 }
 
-color_t color_add(color_t *c1, color_t *c2){
-    color_t c_ret = {
-        .r = c1->r + c2->r,
-        .g = c1->g + c2->g,
-        .b = c1->b + c2->b
-    };
-    return c_ret;
+void color_add(color_t *c1, color_t *c2, color_t *res){
+   
+    res->r = c1->r + c2->r;
+    res->g = c1->g + c2->g;
+    res->b = c1->b + c2->b;
 }
 
-color_t color_sub(color_t *c1, color_t *c2){
-    color_t c_ret = {
-        .r = c1->r - c2->r,
-        .g = c1->g - c2->g,
-        .b = c1->b - c2->b
-    };
-    return c_ret;
+void color_sub(color_t *c1, color_t *c2, color_t *res){
+ 
+    res->r = c1->r - c2->r;
+    res->g = c1->g - c2->g;
+    res->b = c1->b - c2->b;
 }
 
-color_t color_scalar_mult(double scalar, color_t *c){
-    color_t c_ret = {
-        .r = c->r * scalar,
-        .g = c->g * scalar,
-        .b = c->b * scalar
-    };
-    return c_ret;
+void color_scalar_mult(double scalar, color_t *c, color_t *res){
+
+    res->r = c->r * scalar;
+    res->g = c->g * scalar;
+    res->b = c->b * scalar;
 }
 
-color_t color_mult(color_t *c1, color_t *c2){
-    color_t c_ret = {
-        .r = c1->r * c2->r,
-        .g = c1->g * c2->g,
-        .b = c1->b * c2->b
-    };
-    return c_ret;
+void color_mult(color_t *c1, color_t *c2, color_t *res){
+  
+    res->r = c1->r * c2->r;
+    res->g = c1->g * c2->g;
+    res->b = c1->b * c2->b;
 }

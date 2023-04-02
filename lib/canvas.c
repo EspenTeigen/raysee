@@ -60,8 +60,6 @@ canvas_t* canvas_create(long width, long height){
         printf("malloc failed");
         return 0;
     }
-    
-    
 }
 
 void canvas_delete(canvas_t **canvas){

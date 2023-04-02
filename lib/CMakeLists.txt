@@ -2,6 +2,7 @@
 add_library(lib STATIC
     tuples.c
     canvas.c
+    matrices.c
 )
 
 target_include_directories(lib PUBLIC

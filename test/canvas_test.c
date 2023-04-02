@@ -44,7 +44,8 @@ void test_canvas_create(void){
 
 void test_canvas_write_pixel(void){
     canvas_t* canvas = canvas_create(CANVAS_WIDTH, CANVAS_HEIGHT);
-    color_t red = color_create(1.0, 0.0, 0.0);
+    color_t red;
+    color_create(1.0, 0.0, 0.0, &red);
 
     canvas_write_pixel(canvas, 2, 3, &red);
 
@@ -58,9 +59,14 @@ void test_canvas_create_ppm(void){
 
     canvas_t* canvas = canvas_create(5, 3);
 
-    color_t c1 = color_create(1.5, 0.0, 0.0);
-    color_t c2 = color_create(0.0, 0.5, 0.0);
-    color_t c3 = color_create(-0.5, 0.0, 1.0);
+    color_t c1;
+    color_create(1.5, 0.0, 0.0, &c1);
+
+    color_t c2;
+    color_create(0.0, 0.5, 0.0, &c2);
+
+    color_t c3;
+    color_create(-0.5, 0.0, 1.0, &c3);
 
     canvas_write_pixel(canvas, 0, 0, &c1);
     canvas_write_pixel(canvas, 2, 1, &c2);
