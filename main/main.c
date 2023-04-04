@@ -60,30 +60,34 @@ void projectile_path(void){
     }environment;
 
     // Set up initial conditions
-    point(0.0, 1.0, 0.0, &projectile.position);
+    point(0.0, 1.0, 0.0, projectile.position);
     vect3 v;
-    vector(1.0, 1.8, 0.0, &v);
+    vector(1.0, 1.8, 0.0, v);
     vect3 w;
-    norm(&v, &w);
-    scalar_mult(11.25, &w, &projectile.velocity) ;
+    norm(v, w);
+    scalar_mult(11.25, w, projectile.velocity) ;
 
     // Set up environmental factors
-    vector(0.0, -0.1, 0.0, &environment.gravity);
-    vector(-0.01, 0.0, 0.0, &environment.wind);
+    vector(0.0, -0.1, 0.0, environment.gravity);
+    vector(-0.01, 0.0, 0.0, environment.wind);
 
     int tick = 0;
 
-    while(projectile.position.y >= 0){
+    while(projectile.position[Y] >= 0){
         tick += 1;
-        add_tuple(&projectile.position, &projectile.velocity, &projectile.position);
-        add_tuple(&projectile.velocity, &environment.gravity, &projectile.velocity);
-        add_tuple(&projectile.velocity, &environment.wind, &projectile.velocity);
+        add_tuple(projectile.position, projectile.velocity, projectile.position);
+        add_tuple(projectile.velocity, environment.gravity, projectile.velocity);
+        add_tuple(projectile.velocity, environment.wind, projectile.velocity);
 
-        long y_pos = canvas->height - projectile.position.y;
+        long y_pos = canvas->height - projectile.position[Y];
 
-        canvas_write_pixel(canvas, projectile.position.x, y_pos, &yellow);
+        canvas_write_pixel(canvas, projectile.position[X], y_pos, &yellow);
      
     }
+    float startTime = (float)clock()/CLOCKS_PER_SEC;
     canvas_to_ppm(canvas, "../../faen.ppm");
+    float endTime = (float)clock()/CLOCKS_PER_SEC;
+    printf("runtime canvas create: %f\n", endTime - startTime);
+    
     canvas_delete(&canvas);
 }
