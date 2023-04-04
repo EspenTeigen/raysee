@@ -170,17 +170,170 @@ void test_matrix4_transpose(void){
     }
 }
 
+void test_matrix2_det(void){
+    matrix2 a ={
+        {1.0, 5.0},
+        {-3.0, 2.0}
+    };
+
+    double det = matrix2_det(a);
+    TEST_ASSERT_EQUAL_FLOAT(17, det);
+}
+
+
 void test_matrix4_det(void){
     matrix4 a = {
-        {-2.0, -8.0, 3.0,   5.0},
-        {-3.0, 1.0,  7.0,   3.0},
-        {1.0,  2.0,  -9.0,  6.0},
-        {-6.0, 7.0,  7.0,   -9.0}
+        {-2.0, -8.0,   3.0,  5.0},
+        {-3.0,  1.0,   7.0,  3.0},
+        { 1.0,  2.0,  -9.0,  6.0},
+        {-6.0,  7.0,   7.0, -9.0}
     };
 
     TEST_ASSERT_EQUAL_FLOAT(-4071.0, matrix4_det(a));
 
 }
+
+void test_matrix3_submatrix(void){
+    matrix3 a = {
+        { 1.0, 5.0,  0.0},
+        {-3.0, 2.0,  7.0},
+        { 0.0, 6.0, -3.0}
+    };
+
+    matrix2 res = {0};
+
+    matrix3_submatrix(a, 0, 2, res);
+
+    TEST_ASSERT_EQUAL_FLOAT(-3.0, res[0][0]);
+    TEST_ASSERT_EQUAL_FLOAT( 2.0, res[0][1]);
+    TEST_ASSERT_EQUAL_FLOAT( 0.0, res[1][0]);
+    TEST_ASSERT_EQUAL_FLOAT( 6.0, res[1][1]);
+
+}
+
+void test_matrix4_submatrix(void){
+    matrix4 a = {
+        { -6.0, 1.0,  1.0, 6.0},
+        { -8.0, 5.0,  8.0, 6.0},
+        { -1.0, 0.0,  8.0, 2.0},
+        { -7.0, 1.0, -1.0, 1.0}
+    };
+
+    matrix3 res = {0};
+
+    matrix4_submatrix(a, 2, 1, res);
+
+    TEST_ASSERT_EQUAL_FLOAT(-6.0, res[0][0]);
+    TEST_ASSERT_EQUAL_FLOAT( 1.0, res[0][1]);
+    TEST_ASSERT_EQUAL_FLOAT( 6.0, res[0][2]);
+
+    TEST_ASSERT_EQUAL_FLOAT( -8.0, res[1][0]);
+    TEST_ASSERT_EQUAL_FLOAT( 8.0, res[1][1]);
+    TEST_ASSERT_EQUAL_FLOAT( 6.0, res[1][2]);
+
+    TEST_ASSERT_EQUAL_FLOAT( -7.0, res[2][0]);
+    TEST_ASSERT_EQUAL_FLOAT( -1.0, res[2][1]);
+    TEST_ASSERT_EQUAL_FLOAT( 1.0, res[2][2]);
+}
+
+void test_matrix3_minor(void){
+    matrix3 A = {
+        {3.0,  5.0,  0.0},
+        {2.0, -1.0, -7.0},
+        {6.0, -1.0,  5.0}
+    };
+
+    matrix2 B = {0};
+
+    matrix3_submatrix(A, 1, 0, B);
+    double det1 = matrix2_det(B);
+    TEST_ASSERT_EQUAL_FLOAT(25.0, det1);
+
+    double det2 = matrix3_minor(A, 1, 0);
+    TEST_ASSERT_EQUAL_FLOAT(25.0, det2);
+}
+
+void test_matrix3_cofactor(void){
+    matrix3 A = {
+        { 3.0,  5.0,  0.0},
+        { 2.0, -1.0, -7.0},
+        { 6.0, -1.0,  5.0}
+    };
+
+    double minor = matrix3_minor(A, 0, 0);
+    TEST_ASSERT_EQUAL_FLOAT(-12.0, minor);
+    double cofactor = matrix3_cofactor(A, 0 ,0);
+    TEST_ASSERT_EQUAL_FLOAT(-12.0, cofactor);
+
+    minor = matrix3_minor(A, 1, 0);
+    TEST_ASSERT_EQUAL_FLOAT(25.0, minor);
+    cofactor = matrix3_cofactor(A, 1 ,0);
+    TEST_ASSERT_EQUAL_FLOAT(-25.0, cofactor);
+
+}
+
+void test_3x3_det(void){
+    matrix3 A = {
+        {  1.0,  2.0,  6.0},
+        { -5.0,  8.0, -4.0},
+        {  2.0,  6.0,  4.0}
+    };
+
+    double cofactor = matrix3_cofactor(A, 0, 0);
+    TEST_ASSERT_EQUAL_FLOAT(56.0, cofactor);
+    cofactor = matrix3_cofactor(A, 0, 1);
+    TEST_ASSERT_EQUAL_FLOAT(12.0, cofactor);
+    cofactor = matrix3_cofactor(A, 0, 2);
+    TEST_ASSERT_EQUAL_FLOAT(-46.0, cofactor);
+
+    double det = matrix3_det(A);
+    TEST_ASSERT_EQUAL_FLOAT(-196.0, det);
+
+}
+
+void test_4x4_det(void){
+    matrix4 A = {
+        { -2.0, -8.0,  3.0,  5.0},
+        { -3.0,  1.0,  7.0,  3.0},
+        {  1.0,  2.0, -9.0,  6.0},
+        { -6.0,  7.0,  7.0, -9.0}
+    };
+
+    double cofactor = matrix4_cofactor(A, 0, 0);
+    TEST_ASSERT_EQUAL_FLOAT(690.0, cofactor);
+    cofactor = matrix4_cofactor(A, 0, 1);
+    TEST_ASSERT_EQUAL_FLOAT(447.0, cofactor);
+    cofactor = matrix4_cofactor(A, 0, 2);
+    TEST_ASSERT_EQUAL_FLOAT(210.0, cofactor);
+    cofactor = matrix4_cofactor(A, 0, 3);
+    TEST_ASSERT_EQUAL_FLOAT(51.0, cofactor);
+
+    double det = matrix4_det(A);
+    TEST_ASSERT_EQUAL_FLOAT(-4071.0, det);
+
+}
+
+//void test_matrix4_is_invertible(void){
+//    matrix4 a = {
+//        {6.0,  4.0, 4.0,  4.0},
+//        {5.0,  5.0, 7.0,  6.0},
+//        {4.0, -9.0, 3.0, -7.0},
+//        {9.0,  1.0, 7.0, -6.0}
+//    };
+//
+//    TEST_ASSERT_EQUAL(-2120.0, matrix4_det(a));
+//}
+
+//void test_matrix4_is_non_invertible(void){
+//    matrix4 a = {
+//        {-4.0,  2.0, -2.0, -3.0},
+//        { 9.0,  6.0,  2.0,  6.0},
+//        { 0.0, -5.0,  1.0, -5.0},
+//        { 0.0,  0.0,  0.0,  0.0}
+//    };
+//
+//    TEST_ASSERT_EQUAL(0.0, matrix4_det(a));
+//}
 
 int main(void) {
     UNITY_BEGIN();
@@ -192,5 +345,14 @@ int main(void) {
     RUN_TEST(test_matrix4_vect3_mult);
     RUN_TEST(test_identity_matrix);
     RUN_TEST(test_matrix4_transpose);
+    RUN_TEST(test_matrix2_det);
+    RUN_TEST(test_matrix3_submatrix);
+    RUN_TEST(test_matrix4_submatrix);
+    RUN_TEST(test_matrix3_minor);
+    RUN_TEST(test_matrix3_cofactor);
+    RUN_TEST(test_3x3_det);
+    RUN_TEST(test_4x4_det);
+   // RUN_TEST(test_matrix4_is_invertible);
+    //RUN_TEST(test_matrix4_is_non_invertible);
     return UNITY_END();
 }
