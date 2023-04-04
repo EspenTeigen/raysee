@@ -170,8 +170,6 @@ double matrix4_det(matrix4 a){
 
     for(int i = 0; i < 4; i++){
         det += a[0][i] * matrix4_cofactor(a, 0, i);
-        printf("a %f ", a[0][i]);
-        printf("co %f \n", matrix4_cofactor(a, 0, i));
     }
     return det;
 }
