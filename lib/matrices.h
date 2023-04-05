@@ -24,8 +24,7 @@ double matrix4_minor(matrix4 a, const int row, const int col);
 double matrix4_cofactor(matrix4 a, const int row, const int col);
 double matrix4_det(matrix4 a);
 bool matrix4_is_invertible(matrix4 a);
+bool matrix4_inverse(matrix4 a, matrix4 res);
 void matrix4_transpose(matrix4 a, matrix4 res);
-
-
 
 #endif // MATRICES_H_

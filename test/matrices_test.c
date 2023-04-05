@@ -313,27 +313,146 @@ void test_4x4_det(void){
 
 }
 
-//void test_matrix4_is_invertible(void){
-//    matrix4 a = {
-//        {6.0,  4.0, 4.0,  4.0},
-//        {5.0,  5.0, 7.0,  6.0},
-//        {4.0, -9.0, 3.0, -7.0},
-//        {9.0,  1.0, 7.0, -6.0}
-//    };
-//
-//    TEST_ASSERT_EQUAL(-2120.0, matrix4_det(a));
-//}
+void test_matrix4_is_invertible(void){
+    matrix4 a = {
+        {6.0,  4.0, 4.0,  4.0},
+        {5.0,  5.0, 7.0,  6.0},
+        {4.0, -9.0, 3.0, -7.0},
+        {9.0,  1.0, 7.0, -6.0}
+    };
 
-//void test_matrix4_is_non_invertible(void){
-//    matrix4 a = {
-//        {-4.0,  2.0, -2.0, -3.0},
-//        { 9.0,  6.0,  2.0,  6.0},
-//        { 0.0, -5.0,  1.0, -5.0},
-//        { 0.0,  0.0,  0.0,  0.0}
-//    };
-//
-//    TEST_ASSERT_EQUAL(0.0, matrix4_det(a));
-//}
+    TEST_ASSERT_EQUAL(-2120.0, matrix4_det(a));
+}
+
+void test_matrix4_is_non_invertible(void){
+    matrix4 A = {
+        {-4.0,  2.0, -2.0, -3.0},
+        { 9.0,  6.0,  2.0,  6.0},
+        { 0.0, -5.0,  1.0, -5.0},
+        { 0.0,  0.0,  0.0,  0.0}
+    };
+
+    TEST_ASSERT_EQUAL(0.0, matrix4_det(A));
+}
+
+void test_matrix4_inverse(void){
+    matrix4 A = {
+        {-5.0,   2.0,  6.0, -8.0},
+        { 1.0,  -5.0,  1.0,  8.0},
+        { 7.0,   7.0, -6.0, -7.0},
+        { 1.0,  -3.0,  7.0,  4.0}
+    };
+   
+    matrix4 B = {
+        {  0.21805,   0.45113,   0.24060, -0.04511},
+        { -0.80827,  -1.45677,  -0.44361,  0.52068},
+        { -0.07895,  -0.22368,  -0.05263,  0.19737},
+        { -0.52256,  -0.81391,  -0.30075,  0.30639}
+    };
+   
+
+
+    double det = matrix4_det(A);
+    TEST_ASSERT_EQUAL_FLOAT(532.0, det);
+    double cofactor =  matrix4_cofactor(A, 2, 3);
+    TEST_ASSERT_EQUAL_FLOAT(-160.0, cofactor);
+
+    matrix4 C = {0};
+    matrix4_inverse(A, C);
+    TEST_ASSERT_EQUAL_FLOAT(B[3][2], C[3][2]);
+    cofactor = matrix4_cofactor(A, 3, 2);
+    TEST_ASSERT_EQUAL_FLOAT(105.0, cofactor);
+    TEST_ASSERT_EQUAL_FLOAT(B[2][3], C[2][3]);
+
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            TEST_ASSERT_DOUBLE_WITHIN(EPSILON, B[i][j], C[i][j]);
+        }
+    }
+}
+
+void test_matrix4_inverse_2(void){
+    
+    matrix4 A = {
+        { 8.0,  -5.0,  9.0,  2.0},
+        { 7.0,   5.0,  6.0,  1.0},
+        {-6.0,   0.0,  9.0,  6.0},
+        {-3.0,   0.0, -9.0, -4.0}
+    };
+
+    matrix4 B = {
+        { -0.15385,  -0.15385, -0.28205,  -0.53846},
+        { -0.07692,   0.12308,  0.02564,   0.03077},
+        {  0.35897,   0.35897,  0.43590,   0.92308},
+        { -0.69231,  -0.69231, -0.76923,  -1.92308}
+    };
+
+    matrix4 C = {0};
+    matrix4_inverse(A, C);
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            TEST_ASSERT_DOUBLE_WITHIN(EPSILON, B[i][j], C[i][j]);
+        }
+    }
+}
+
+void test_matrix4_inverse_3(void){
+    matrix4 A = {
+        { 9.0,   3.0,  0.0,  9.0},
+        {-5.0,  -2.0, -6.0, -3.0},
+        {-4.0,   9.0,  6.0,  4.0},
+        {-7.0,   6.0,  6.0,  2.0}
+    };
+
+    matrix4 B = {
+        { -0.04074,  -0.07778,  0.14444,  -0.22222},
+        { -0.07778,   0.03333,  0.36667,  -0.33333},
+        { -0.02901,  -0.14630, -0.10926,   0.12963},
+        {  0.17778,   0.06667, -0.26667,   0.33333}
+    };
+
+    matrix4 C = {0};
+    matrix4_inverse(A, C);
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            TEST_ASSERT_DOUBLE_WITHIN(EPSILON, B[i][j], C[i][j]);
+        }
+    }
+}
+
+void test_matrix4_mult_inv(void){
+    matrix4 A = {
+        { 3.0,  -9.0,  7.0,  3.0},
+        { 3.0,  -8.0,  2.0, -9.0},
+        {-4.0,   4.0,  4.0,  1.0},
+        {-6.0,   5.0, -1.0,  1.0}
+    };
+
+    matrix4 B = {
+        { 8.0,   2.0,  2.0,  2.0},
+        { 3.0,  -1.0,  7.0,  0.0},
+        { 7.0,   0.0,  5.0,  4.0},
+        { 6.0,  -2.0,  0.0,  5.0}
+    };
+
+    matrix4 C = {0};
+    matrix4_mult(A, B, C);
+
+    matrix4 inv = {0};
+
+    matrix4_inverse(B, inv);
+    matrix4 res = {0};
+    matrix4_mult(C, inv, res);
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            TEST_ASSERT_DOUBLE_WITHIN(EPSILON, A[i][j], res[i][j]);
+        }
+    }
+}
+
 
 int main(void) {
     UNITY_BEGIN();
@@ -352,7 +471,11 @@ int main(void) {
     RUN_TEST(test_matrix3_cofactor);
     RUN_TEST(test_3x3_det);
     RUN_TEST(test_4x4_det);
-   // RUN_TEST(test_matrix4_is_invertible);
-    //RUN_TEST(test_matrix4_is_non_invertible);
+    RUN_TEST(test_matrix4_is_invertible);
+    RUN_TEST(test_matrix4_is_non_invertible);
+    RUN_TEST(test_matrix4_inverse);
+    RUN_TEST(test_matrix4_inverse_2);
+    RUN_TEST(test_matrix4_inverse_3);
+    RUN_TEST(test_matrix4_mult_inv);
     return UNITY_END();
 }

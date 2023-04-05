@@ -64,7 +64,7 @@ double matrix3_cofactor(matrix3 a, const int row, const int col){
     double minor = matrix3_minor(a, row, col);
 
     if((row+col % 2) != 0){
-        minor *= -1;
+        minor = -minor;
     }
 
     return minor;
@@ -158,10 +158,10 @@ double matrix4_cofactor(matrix4 a, const int row, const int col){
 
     double minor = matrix4_minor(a, row, col);
 
-    if((row+col % 2) != 0){
-        minor *= -1;
+    if(((row+col) % 2) != 0){
+        minor *= (-1);
     }
-
+ 
     return minor;
 }
 
@@ -174,20 +174,6 @@ double matrix4_det(matrix4 a){
     return det;
 }
 
-//double matrix4_det(matrix4 a){
-//    return a[0][3] * a[1][2] * a[2][1] * a[3][0] - a[0][2] * a[1][3] * a[2][1] * a[3][0] -
-//           a[0][3] * a[1][1] * a[2][2] * a[3][0] + a[0][1] * a[1][3] * a[2][2] * a[3][0] +
-//           a[0][2] * a[1][1] * a[2][3] * a[3][0] - a[0][1] * a[1][2] * a[2][3] * a[3][0] -
-//           a[0][3] * a[1][2] * a[2][0] * a[3][1] + a[0][2] * a[1][3] * a[2][0] * a[3][1] +
-//           a[0][3] * a[1][0] * a[2][2] * a[3][1] - a[0][0] * a[1][3] * a[2][2] * a[3][1] -
-//           a[0][2] * a[1][0] * a[2][3] * a[3][1] + a[0][0] * a[1][2] * a[2][3] * a[3][1] +
-//           a[0][3] * a[1][1] * a[2][0] * a[3][2] - a[0][1] * a[1][3] * a[2][0] * a[3][2] -
-//           a[0][3] * a[1][0] * a[2][1] * a[3][2] + a[0][0] * a[1][3] * a[2][1] * a[3][2] +
-//           a[0][1] * a[1][0] * a[2][3] * a[3][2] - a[0][0] * a[1][1] * a[2][3] * a[3][2] -
-//           a[0][2] * a[1][1] * a[2][0] * a[3][3] + a[0][1] * a[1][2] * a[2][0] * a[3][3] +
-//           a[0][2] * a[1][0] * a[2][1] * a[3][3] - a[0][0] * a[1][2] * a[2][1] * a[3][3] -
-//           a[0][1] * a[1][0] * a[2][2] * a[3][3] + a[0][0] * a[1][1] * a[2][2] * a[3][3];
-//}
 
 bool matrix4_is_invertible(matrix4 a){
     if(matrix4_det(a) != 0.0){
@@ -196,4 +182,26 @@ bool matrix4_is_invertible(matrix4 a){
     else{
         return false;
     }
+}
+
+bool matrix4_inverse(matrix4 a, matrix4 res){
+
+    double cof = 0;
+    double det = matrix4_det(a);
+    bool invertible = false;
+
+    if(!epsilon_equal(det, 0.0)){
+
+        invertible = true;
+        double det_inv = 1.0/det;
+
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                cof = matrix4_cofactor(a, i, j);
+                res[j][i] = cof * det_inv; 
+            }
+        }
+    }
+
+    return invertible;
 }
