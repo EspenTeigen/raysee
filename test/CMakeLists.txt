@@ -11,7 +11,6 @@ add_executable(matrices_test_app matrices_test.c)
 target_link_libraries(matrices_test_app lib unity m)
 add_test(matrices_test matrices_test_app)
 
-transformations_test
 
 add_executable(transformations_test_app transformations_test.c)
 target_link_libraries(transformations_test_app lib unity m)
