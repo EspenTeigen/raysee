@@ -11,7 +11,7 @@
 #include <stdbool.h>
 
 /// Max error between floats
-#define EPSILON 0.0001
+#define EPSILON 0.00001
 
 /// @brief Vector with w
 //typedef struct{
