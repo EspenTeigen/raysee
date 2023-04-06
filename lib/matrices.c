@@ -117,6 +117,9 @@ void matrix4_get_identity(matrix4 res){
             if(i == j){
                 res[i][j] = 1.0;
             }
+            else{
+                res[i][j] = 0.0;
+            }
         }
     }
 }
