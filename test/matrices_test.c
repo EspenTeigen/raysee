@@ -108,14 +108,14 @@ void test_matrix4_vect3_mult(void){
         {0.0, 0.0, 0.0, 1.0}
     };
 
-    vect3 v = {
+    vect4 v = {
         1.0,
         2.0,
         3.0,
         1.0
     };
 
-    vect3 res = {0};
+    vect4 res = {0};
 
     matrix4_vect3_mult(m, v, res);
     TEST_ASSERT_EQUAL_FLOAT(18.0, res[X]);

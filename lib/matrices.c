@@ -102,7 +102,7 @@ void matrix4_mult(matrix4 mat1, matrix4 mat2, matrix4 res){
     }
 }
 
-void matrix4_vect3_mult(matrix4 mat, vect3 vect, vect3 res){
+void matrix4_vect3_mult(matrix4 mat, vect4 vect, vect4 res){
     for(int i = 0; i < 4; i++){
         for(int j = 0; j < 4; j++){
             res[j] += mat[j][i] * vect[i];

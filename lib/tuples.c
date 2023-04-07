@@ -16,7 +16,7 @@ bool epsilon_equal(double a, double b)
     }
 }
 
-void tuple(double x, double y, double z, double w, vect3 res)
+void tuple(double x, double y, double z, double w, vect4 res)
 {
     res[X] = x;
     res[Y] = y;
@@ -25,7 +25,7 @@ void tuple(double x, double y, double z, double w, vect3 res)
 }
 
 
-void point(double x, double y, double z, vect3 res)
+void point(double x, double y, double z, vect4 res)
 {
     res[X] = x;
     res[Y] = y;
@@ -34,7 +34,7 @@ void point(double x, double y, double z, vect3 res)
 }
 
 
-void vector(double x, double y, double z, vect3 res)
+void vector(double x, double y, double z, vect4 res)
 {
     res[X] = x;
     res[Y] = y;
@@ -43,7 +43,7 @@ void vector(double x, double y, double z, vect3 res)
 }
 
 
-bool tuple_equal(vect3 a, vect3 b)
+bool tuple_equal(vect4 a, vect4 b)
 {
 
     if (epsilon_equal(a[X], b[X]) &&
@@ -61,7 +61,7 @@ bool tuple_equal(vect3 a, vect3 b)
 }
 
 
-void add_tuple(vect3 a, vect3 b, vect3 res)
+void add_tuple(vect4 a, vect4 b, vect4 res)
 {
         res[X] = a[X] + b[X];
         res[Y] = a[Y] + b[Y];
@@ -70,7 +70,7 @@ void add_tuple(vect3 a, vect3 b, vect3 res)
 }
 
 
-void sub_two_tuples(vect3 a, vect3 b, vect3 res)
+void sub_two_tuples(vect4 a, vect4 b, vect4 res)
 {
         res[X] = a[X] - b[X],
         res[Y] = a[Y] - b[Y],
@@ -78,7 +78,7 @@ void sub_two_tuples(vect3 a, vect3 b, vect3 res)
         res[W] = a[W] - b[W];
 }
 
-void negate(vect3 a, vect3 res)
+void negate(vect4 a, vect4 res)
 {
     res[X] = -1.0f * a[X];
     res[Y] = -1.0f * a[Y];
@@ -86,7 +86,7 @@ void negate(vect3 a, vect3 res)
     res[W] = -1.0f * a[W];
 }
 
-void scalar_mult(double scalar, vect3 b, vect3 res)
+void scalar_mult(double scalar, vect4 b, vect4 res)
 {
     res[X] = b[X] * scalar;
     res[Y] = b[Y] * scalar;
@@ -94,7 +94,7 @@ void scalar_mult(double scalar, vect3 b, vect3 res)
     res[W] = b[W] * scalar;
 }
 
-void scalar_div(double scalar, vect3 b, vect3 res)
+void scalar_div(double scalar, vect4 b, vect4 res)
 {
     res[X] = b[X] / scalar;
     res[Y] = b[Y] / scalar;
@@ -102,12 +102,12 @@ void scalar_div(double scalar, vect3 b, vect3 res)
     res[W] = b[W] / scalar;
 }
 
-double mag(vect3 a)
+double mag(vect4 a)
 {
     return sqrt(pow(a[X], 2.0) + pow(a[Y], 2.0) + pow(a[Z], 2.0) + pow(a[W], 2.0));
 }
 
-void norm(vect3 a, vect3 res)
+void norm(vect4 a, vect4 res)
 {
    
     for(int i = 0; i < 4; i++){
@@ -124,24 +124,24 @@ void norm(vect3 a, vect3 res)
 }
 
 // Takes two vectors, return dot product
-double dot_p(vect3 a, vect3 b)
+double dot_p(vect4 a, vect4 b)
 {
     return (a[X] * b[X]) + (a[Y] * b[Y]) + (a[Z] * b[Z]) + (a[W] * b[W]);
 }
 
-void cross_p(vect3 a, vect3 b, vect3 res){
+void cross_p(vect4 a, vect4 b, vect4 res){
     res[X] = (a[Y] * b[Z]) - (a[Z] * b[Y]);
     res[Y] = (a[Z] * b[X]) - (a[X] * b[Z]);   
     res[Z] = (a[X] * b[Y]) - (a[Y] * b[X]);
     res[W] = 0.0;
 }
 
-bool is_vector(vect3 v)
+bool is_vector(vect4 v)
 {
     return epsilon_equal(0.0f, v[W]);
 }
 
-bool is_point(vect3 p)
+bool is_point(vect4 p)
 {
     return epsilon_equal(1.0, p[W]);
 }

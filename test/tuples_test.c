@@ -13,7 +13,7 @@ void tearDown(void) {
 
 void test_tuple_is_point(void) {
     
-    vect3 v2;
+    vect4 v2;
     tuple(4.3, -4.2, 3.1, 1.0, v2);
     
     TEST_ASSERT_EQUAL_FLOAT(4.3,  v2[X]);
@@ -25,7 +25,7 @@ void test_tuple_is_point(void) {
 
 void test_tuple_is_vector(void) {
  
-    vect3 v2;
+    vect4 v2;
     tuple(4.3, -4.2, 3.1, 0.0, v2);
 
     TEST_ASSERT_EQUAL_FLOAT(4.3,  v2[X]);
@@ -37,7 +37,7 @@ void test_tuple_is_vector(void) {
 
 void test_point(void){
 
-    vect3 p2;
+    vect4 p2;
     point(4.0, -4.0, 3.0, p2);
 
     TEST_ASSERT_EQUAL_FLOAT(4.0,  p2[X]);
@@ -49,7 +49,7 @@ void test_point(void){
 
 void test_vector(void){
 
-    vect3 p2;
+    vect4 p2;
     vector(4.0, -4.0, 3.0, p2);
 
     TEST_ASSERT_EQUAL_FLOAT(4.0,  p2[X]);
@@ -60,14 +60,14 @@ void test_vector(void){
 
 
 void test_vect3_equal(void){
-    vect3 p1 = {
+    vect4 p1 = {
         4.0,
         -4.0,
         3.0,
         0.0
     };
 
-    vect3 p2 = {
+    vect4 p2 = {
         4.0,
         -4.0,
         3.0,
@@ -79,21 +79,21 @@ void test_vect3_equal(void){
 
 
 void test_vect3_add_tuple(void){
-    vect3 p = {
+    vect4 p = {
         3.0,
         -2.0,
         5.0,
         1.0
     };
 
-    vect3 v = {
+    vect4 v = {
         -2.0,
         3.0,
         1.0,
         0.0
     };
 
-    vect3 res;
+    vect4 res;
     add_tuple(p, v, res);
     
     TEST_ASSERT_EQUAL_FLOAT(1.0, res[X]);
@@ -104,13 +104,13 @@ void test_vect3_add_tuple(void){
 
 
 void test_vect3_sub_two_points(void){
-    vect3 p1;
+    vect4 p1;
     point(3.0, 2.0, 1.0, p1);
   
-    vect3 p2;
+    vect4 p2;
     point(5.0, 6.0, 7.0, p2);
     
-    vect3 res;
+    vect4 res;
     sub_two_tuples(p1, p2, res);
     
     TEST_ASSERT_EQUAL_FLOAT(-2.0, res[X]);
@@ -122,13 +122,13 @@ void test_vect3_sub_two_points(void){
 
 
 void test_vect3_sub_point_vector(void){
-    vect3 p;
+    vect4 p;
     point(3.0, 2.0, 1.0, p);
   
-    vect3 v1;
+    vect4 v1;
     vector(5.0, 6.0, 7.0, v1);
 
-    vect3 res;
+    vect4 res;
     sub_two_tuples(p, v1, res);
     
     TEST_ASSERT_EQUAL_FLOAT(-2.0, res[X]);
@@ -139,13 +139,13 @@ void test_vect3_sub_point_vector(void){
 
 
 void test_is_point(void){
-    vect3 p;
+    vect4 p;
     point(1.0, 1.0, 1.0, p);
     bool res = is_point(p);
 
     TEST_ASSERT_EQUAL(true, res);
 
-    vect3 v;
+    vect4 v;
     vector(1.0, 1.0, 1.0, v);
 
     res = is_point(v);
@@ -154,13 +154,13 @@ void test_is_point(void){
 
 
 void test_is_vector(void){
-    vect3 p;
+    vect4 p;
     vector(1.0, 1.0, 1.0, p);
     bool res = is_vector(p);
 
     TEST_ASSERT_EQUAL(true, res);
 
-    vect3 v;
+    vect4 v;
     point(1.0, 1.0, 1.0, v);
     res = is_vector(v);
     TEST_ASSERT_EQUAL(false, res);
@@ -168,7 +168,7 @@ void test_is_vector(void){
 
 
 void test_negate(void){
-    vect3 t;
+    vect4 t;
     tuple(1.0, -2.0, 3.0, -4.0, t);
     negate(t, t);
   
@@ -182,10 +182,10 @@ void test_negate(void){
 void test_scalar_mult(void){
 
     float s = 3.5f;
-    vect3 t;
+    vect4 t;
     tuple(1.0, -2.0, 3.0, -4.0, t);
     
-    vect3 v;
+    vect4 v;
     scalar_mult(s, t, v);
    
     TEST_ASSERT_EQUAL_FLOAT(3.5,   v[X]);
@@ -198,9 +198,9 @@ void test_scalar_mult(void){
 void test_mult_frac(void){
 
     float s = 0.5;
-    vect3 t;
+    vect4 t;
     tuple(1.0, -2.0, 3.0, -4.0, t);
-    vect3 v;
+    vect4 v;
     scalar_mult(s, t, v);
     
     TEST_ASSERT_EQUAL_FLOAT(0.5,  v[X]);
@@ -212,10 +212,10 @@ void test_mult_frac(void){
 
 void test_scalar_div(void){
     float s = 2.0;
-    vect3 t;
+    vect4 t;
     tuple(1.0, -2.0, 3.0, -4.0, t);
 
-    vect3 v;
+    vect4 v;
     scalar_div(s, t, v);
 
     TEST_ASSERT_EQUAL_FLOAT(0.5,  v[X]);
@@ -226,19 +226,19 @@ void test_scalar_div(void){
 
 
 void test_magnitude(void){
-    vect3 v1;
+    vect4 v1;
     vector(1.0, 0.0, 0.0, v1);
 
-    vect3 v2;
+    vect4 v2;
     vector(0.0, 1.0, 0.0, v2);
 
-    vect3 v3;
+    vect4 v3;
     vector(0.0, 0.0, 1.0, v3);
 
-    vect3 v4;
+    vect4 v4;
     vector(1.0, 2.0, 3.0, v4);
 
-    vect3 v5;
+    vect4 v5;
     vector(-1.0, -2.0, -3.0, v5);
     float mag1 = mag(v1);
     float mag2 = mag(v2);
@@ -254,10 +254,10 @@ void test_magnitude(void){
 }
 
 void test_norm(void){
-    vect3 v;
+    vect4 v;
     vector(4.0, 0.0, 0.0, v);
 
-    vect3 normalized;
+    vect4 normalized;
     norm(v, normalized);
     
     TEST_ASSERT_FLOAT_WITHIN(EPSILON, 1.0, normalized[X]);
@@ -274,10 +274,10 @@ void test_norm(void){
 }
 
 void test_dot(void){
-    vect3 v1;
+    vect4 v1;
     vector(1.0, 2.0, 3.0, v1);
 
-    vect3 v2;
+    vect4 v2;
     vector(2.0, 3.0, 4.0, v2);
 
     float d = dot_p(v1, v2);
@@ -286,16 +286,16 @@ void test_dot(void){
 }
 
 void test_cross(void){
-    vect3 v1;
+    vect4 v1;
     vector(1.0, 2.0, 3.0, v1);
 
-    vect3 v2; 
+    vect4 v2; 
     vector(2.0, 3.0, 4.0, v2);
 
-    vect3 c1;
+    vect4 c1;
     cross_p(v1, v2, c1);
 
-    vect3 c2;
+    vect4 c2;
     cross_p(v2, v1, c2);
 
     TEST_ASSERT_EQUAL_FLOAT(-1.0, c1[X]);

@@ -68,9 +68,9 @@ void matrix4_mult(matrix4 mat1, matrix4 mat2, matrix4 res);
 
 /// @brief Multiply a 4x4 matrix with a vector
 /// @param mat matrix4 matrix to multiply with
-/// @param vect vect3 vector to multiply with
-/// @param res vect3 containing result
-void matrix4_vect3_mult(matrix4 mat, vect3 vect, vect3 res);
+/// @param vect vect4 vector to multiply with
+/// @param res vect4 containing result
+void matrix4_vect3_mult(matrix4 mat, vect4 vect, vect4 res);
 
 /// @brief get a 4x4 identity matrix
 /// @param res matrix4: the identity matrix returned

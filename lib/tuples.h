@@ -32,10 +32,10 @@ typedef enum{
     W
 }axis_t;
 
-typedef double vect3[4];
+typedef double vect4[4];
 
 // Used to separate between vector and points
-typedef vect3 point3;
+typedef vect4 point3;
 
 double inv_sqrt(double a);
 bool epsilon_equal(double a, double b);
@@ -46,7 +46,7 @@ bool epsilon_equal(double a, double b);
 /// @param z z-coordinate
 /// @param w w-coordinate 0 if vector and 1 if point
 /// @param res result
-void tuple(double x, double y, double z, double w, vect3 res);
+void tuple(double x, double y, double z, double w, vect4 res);
 
 
 /// @brief Create a point
@@ -54,84 +54,84 @@ void tuple(double x, double y, double z, double w, vect3 res);
 /// @param y y coordinate
 /// @param z z-coordinate
 /// @param res result
-void point(double x, double y, double z, vect3 res);
+void point(double x, double y, double z, vect4 res);
 
 /// @brief Create a vector
 /// @param x x-coordinate
 /// @param y y coordinate
 /// @param z z-coordinate
 /// @param res result
-void vector(double x, double y, double z, vect3 res);
+void vector(double x, double y, double z, vect4 res);
 
 /// @brief Check if two vectors are equal
 /// @param a vector 1
 /// @param b vector 2
 /// @return true if equal, false if not
-bool tuple_equal(vect3 a, vect3 b);
+bool tuple_equal(vect4 a, vect4 b);
 
 /// @brief Add two tuples, accept both vectors and points.
 /// @param a vector 1
 /// @param b vector 2
 /// @param res result
-void add_tuple(vect3 a, vect3 b, vect3 res);
+void add_tuple(vect4 a, vect4 b, vect4 res);
 
 /// @brief Subtract two tuples, accept both vectors and points
 /// @param a vector 1
 /// @param b vector 2
 /// @param res result
-void sub_two_tuples(vect3 a, vect3 b, vect3 res);
+void sub_two_tuples(vect4 a, vect4 b, vect4 res);
 
 /// @brief Negate a vector
 /// @param a vector to negate
 /// @param res result
-void negate(vect3 a, vect3 res);
+void negate(vect4 a, vect4 res);
 
 
 /// @brief Multiply a scalar with a vector
 /// @param scalar A scalar
 /// @param a a vector
 /// @param res result
-void scalar_mult(double scalar, vect3 a, vect3 res);
+void scalar_mult(double scalar, vect4 a, vect4 res);
 
 
 /// @brief Divide a scalar with a vector
 /// @param scalar A scalar
 /// @param a a vector
 /// @param res result
-void scalar_div(double scalar, vect3 a, vect3 res);
+void scalar_div(double scalar, vect4 a, vect4 res);
 
 /// @brief Find the magnitude of a vector
 /// @param a the vector to normalize
 /// @return float with the magnitude
-double mag(vect3 a);
+double mag(vect4 a);
 
 /// @brief Normalize a vector
 /// @param a the vector to normalize 
 /// @param res result
-void norm(vect3 a, vect3 res);
+void norm(vect4 a, vect4 res);
 
 
 /// @brief Calculate the cross product og two vectors, only works for vectors
 /// @param a vector 1
 /// @param b vector 2
 /// @param res result
-void cross_p(vect3 a, vect3 b, vect3 res);
+void cross_p(vect4 a, vect4 b, vect4 res);
 
 /// @brief Take the dot product
 /// @param a vector 1
 /// @param b vector 2
 /// @return float with the dot product
-double dot_p(vect3 a, vect3 b);
+double dot_p(vect4 a, vect4 b);
 
 /// @brief Check if a tuple is a vector
 /// @param v the tuple to check
 /// @return bool true if it is a vector
-bool is_vector(vect3 v);
+bool is_vector(vect4 v);
 
 /// @brief Check if tuple is a point
 /// @param p the point to check
 /// @return bool true if it is a vector
-bool is_point(vect3 p);
+bool is_point(vect4 p);
 
 //----------- colors ---------------
 
