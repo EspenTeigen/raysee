@@ -70,11 +70,14 @@ void canvas_delete(canvas_t **canvas){
 void canvas_write_pixel(canvas_t *canvas, long x, long y, color_t *color){
     
     long pos = x + canvas->width * y;
-
-    if(pos <= (canvas->width*canvas->height)){
+    
+    if(pos < (canvas->width*canvas->height) && (pos >= 0.0)){
         canvas->pixels[pos].r = color->r;
         canvas->pixels[pos].g = color->g;
         canvas->pixels[pos].b = color->b;
+    }
+    else{
+        printf("canvas_write_to_pixel out of range, x: %li y: %li\n", x, y);
     }
     
 }
