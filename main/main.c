@@ -6,13 +6,11 @@
 #include "create_canvas/create_canvas.h"
 #include "analog_clock/analog_clock.h"
 
-void test_canvas(void);
-void analog_clock(void);
-
 int main(){
     printf("start\n");
     //projectile_path();
     //test_canvas();
     analog_clock();
-return 0;
+
+    return 0;
 }
