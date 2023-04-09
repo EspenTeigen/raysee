@@ -39,24 +39,34 @@ void transformation_get_scaling(double x, double y, double z, matrix4 res){
 }
 
 void transformation_get_rotx(double angle, matrix4 res){
-    matrix4 temp = {
-        {1.0,   0.0,            0.0,            0.0},
-        {0.0,   cos(angle),    -sin(angle),     0.0},
-        {0.0,   sin(angle),     cos(angle),     0.0},
-        {0.0,   0.0,            0.0,            1.0}
-    };
 
-    memcpy(res, temp, sizeof(matrix4));
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            res[i][j] = 0.0;
+        }
+    }
+
+    res[0][0] = 1.0;
+    res[1][1] = cos(angle);
+    res[1][2] = -sin(angle);
+    res[2][1] = sin(angle);
+    res[2][2] = cos(angle);
+    res[3][3] = 1.0;
 }
 
 void transformation_get_roty(double angle, matrix4 res){
-    matrix4 temp = {
-        {cos(angle),    0.0,    sin(angle),     0.0},
-        {0.0,           1.0,    0.0,            0.0},
-        {-sin(angle),   0.0,    cos(angle),     0.0},
-        {0.0,           0.0,    0.0,            1.0}
-    };
-    memcpy(res, temp, sizeof(matrix4));
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            res[i][j] = 0.0;
+        }
+    }
+
+    res[0][0] = cos(angle);
+    res[0][2] = sin(angle);
+    res[2][0] = -sin(angle);
+    res[2][2] = cos(angle);
+    res[3][3] = 1.0;
 }
 
 void transformation_get_rotz(double angle, matrix4 res){
@@ -68,6 +78,18 @@ void transformation_get_rotz(double angle, matrix4 res){
     };
     
     memcpy(res, temp, sizeof(matrix4));
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+            res[i][j] = 0.0;
+        }
+    }
+
+    res[0][0] = cos(angle);
+    res[0][1] = -sin(angle);
+    res[1][0] = sin(angle);
+    res[1][1] = cos(angle);
+    res[3][3] = 1.0;
 }
 
 void transformation_get_shearing(double x_y, double x_z, double y_x, double y_z, double z_x, double z_y, matrix4 res){
