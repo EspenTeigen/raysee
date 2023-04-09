@@ -29,4 +29,5 @@ void test_canvas(void){
     canvas_to_ppm(canvas, "../../main/create_canvas/helvete.ppm");
     endTime = (float)clock()/CLOCKS_PER_SEC;
     printf("runtime canvas write: %f\n", endTime - startTime);
+    canvas_delete(&canvas);
 }
