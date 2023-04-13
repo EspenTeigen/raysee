@@ -16,8 +16,8 @@
 
 void analog_clock(void)
 {   
-    const long width = 500;
-    const long height = 500;
+    const long width = 5000;
+    const long height = 5000;
 
     const long radius = width*0.4;
 
@@ -43,7 +43,6 @@ void analog_clock(void)
         vect4 new_point = {0};
         matrix4_vect3_mult(res, start_point, new_point);
         canvas_write_pixel(canvas, new_point[X], new_point[Y], &white);
-        printf("x: %fm y: %f\n", new_point[X], new_point[Y]);
     }
 
     canvas_to_ppm(canvas, "../../main//analog_clock/satan.ppm");
@@ -52,6 +51,4 @@ void analog_clock(void)
     // get end time
     float endTime = (float)clock()/CLOCKS_PER_SEC;
     printf("runtime canvas write: %f\n", endTime - startTime);
-
-    
 }

@@ -35,7 +35,7 @@ typedef enum{
 typedef double vect4[4];
 
 // Used to separate between vector and points
-typedef vect4 point3;
+typedef vect4 point4;
 
 double inv_sqrt(double a);
 bool epsilon_equal(double a, double b);
@@ -54,7 +54,7 @@ void tuple(double x, double y, double z, double w, vect4 res);
 /// @param y y coordinate
 /// @param z z-coordinate
 /// @param res result
-void point(double x, double y, double z, vect4 res);
+void point(double x, double y, double z, point4 res);
 
 /// @brief Create a vector
 /// @param x x-coordinate
@@ -117,11 +117,11 @@ void norm(vect4 a, vect4 res);
 /// @param res result
 void cross_p(vect4 a, vect4 b, vect4 res);
 
-/// @brief Take the dot product
+/// @brief Take the vect4_dot product
 /// @param a vector 1
 /// @param b vector 2
 /// @return float with the dot product
-double dot_p(vect4 a, vect4 b);
+double vect4_dot(vect4 a, vect4 b);
 
 /// @brief Check if a tuple is a vector
 /// @param v the tuple to check

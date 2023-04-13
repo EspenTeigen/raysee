@@ -25,7 +25,7 @@ void tuple(double x, double y, double z, double w, vect4 res)
 }
 
 
-void point(double x, double y, double z, vect4 res)
+void point(double x, double y, double z, point4 res)
 {
     res[X] = x;
     res[Y] = y;
@@ -123,8 +123,8 @@ void norm(vect4 a, vect4 res)
     }
 }
 
-// Takes two vectors, return dot product
-double dot_p(vect4 a, vect4 b)
+// Takes two vectors, return vect4_dot product
+double vect4_dot(vect4 a, vect4 b)
 {
     return (a[X] * b[X]) + (a[Y] * b[Y]) + (a[Z] * b[Z]) + (a[W] * b[W]);
 }

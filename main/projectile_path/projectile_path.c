@@ -3,6 +3,7 @@
 #include <time.h>
 #include "canvas.h"
 #include "tuples.h"
+#include <rays.h>
 
 
 void projectile_path(void){
@@ -12,7 +13,7 @@ void projectile_path(void){
     color_create(1.0, 1.0, 0.0, &yellow);
 
     struct _projectile{
-        point3 position;
+        point4 position;
         vect4 velocity;
     }projectile;
 
