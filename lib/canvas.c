@@ -45,20 +45,15 @@ void print_pixels(canvas_t *canvas, FILE *fp){
 
 canvas_t* canvas_create(long width, long height){
 
-    canvas_t *canvas = (canvas_t*)malloc(sizeof(*canvas) + 3*width*height*sizeof(double));
+    canvas_t *canvas = calloc(1, sizeof(*canvas) + 3*width*height*sizeof(double));
     if(canvas){
         canvas->height = height;
         canvas->width = width;
-        for(int i = 0; i < (width*height); i++){
-            canvas->pixels[0].r = 0.0;
-            canvas->pixels[0].g = 0.0;
-            canvas->pixels[0].b = 0.0;
-        }
         return canvas;
     }
     else{
-        printf("malloc failed");
-        return 0;
+        printf("calloc failed");
+        return NULL;
     }
 }
 
