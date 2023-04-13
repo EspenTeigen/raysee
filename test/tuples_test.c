@@ -280,7 +280,7 @@ void test_dot(void){
     vect4 v2;
     vector(2.0, 3.0, 4.0, v2);
 
-    float d = dot_p(v1, v2);
+    float d = vect4_dot(v1, v2);
 
    TEST_ASSERT_EQUAL_FLOAT(20.0, d);
 }
