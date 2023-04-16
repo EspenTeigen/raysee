@@ -48,7 +48,6 @@ bool epsilon_equal(double a, double b);
 /// @param res result
 void tuple(double x, double y, double z, double w, vect4 res);
 
-
 /// @brief Create a point
 /// @param x x-coordinate
 /// @param y y coordinate

@@ -7,6 +7,7 @@ add_library(lib STATIC
     matrices.c
     transformations.c
     rays.c
+    spheres.c
 )
 
 target_include_directories(lib PUBLIC

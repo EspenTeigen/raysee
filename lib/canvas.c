@@ -45,7 +45,7 @@ void print_pixels(canvas_t *canvas, FILE *fp){
 
 canvas_t* canvas_create(long width, long height){
 
-    canvas_t *canvas = calloc(1, sizeof(*canvas) + 3*width*height*sizeof(double));
+    canvas_t *canvas = calloc(1, sizeof(canvas) + 3*width*height*sizeof(double));
     if(canvas){
         canvas->height = height;
         canvas->width = width;

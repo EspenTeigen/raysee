@@ -4,6 +4,7 @@
 #include <tuples.c>
 #include <transformations.h>
 #include <math.h>
+#include <spheres.h>
 void setUp(void) {
     
 }

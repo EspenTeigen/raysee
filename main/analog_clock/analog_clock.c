@@ -16,8 +16,8 @@
 
 void analog_clock(void)
 {   
-    const long width = 5000;
-    const long height = 5000;
+    const long width = 2000;
+    const long height = 2000;
 
     const long radius = width*0.4;
 

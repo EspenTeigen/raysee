@@ -7,10 +7,16 @@
 #include <math.h>
 
 
+static int sort_compare(const void *a, const void *b){
+    intersect_t *intersectA = (intersect_t *)a;
+    intersect_t *intersectB = (intersect_t *)b;
+
+    return intersectA->t - intersectB->t;
+}
 
 intersections_t* rays_alloc_intersections_t(size_t number_of_elements){
 
-   intersections_t *xs = malloc(sizeof(*xs) + number_of_elements*sizeof(intersect_t));
+   intersections_t *xs = calloc(number_of_elements, sizeof(xs) + number_of_elements*sizeof(intersect_t));
 
    if(!xs){
     printf("failed to malloc intersections_t");
@@ -22,10 +28,12 @@ intersections_t* rays_alloc_intersections_t(size_t number_of_elements){
    }  
 }
 
-void rays_ray(point4 origin, vect4 direction, ray_t *res)
+ray_t ray(point4 origin, vect4 direction)
 {
-    memcpy(res->origin, origin, sizeof(point4));
-    memcpy(res->direction, direction, sizeof(vect4));
+    ray_t res;
+    memcpy(res.origin, origin, sizeof(point4));
+    memcpy(res.direction, direction, sizeof(vect4));
+    return res;
 }
 
 void rays_position(ray_t *ray, double t, point4 res)
@@ -35,23 +43,31 @@ void rays_position(ray_t *ray, double t, point4 res)
     }
 }
 
-void rays_sphere(sphere_t *shape)
-{   
-    srand(time(NULL));
-    shape->object = SPHERE;
-    shape->r = (double)rand()*0.94335;
-}
+
 
 void sphere_intersect(sphere_t *sphere, ray_t *ray, intersections_t *res)
 {   
+    matrix4 sphere_inv ;
+    matrix4_inverse(sphere->transform, sphere_inv);
+   
+    ray_t ray_inv;
+    rays_transform(ray, sphere_inv, &ray_inv);
+    
+  //  for(int i = 0; i < 4; i++){
+  //      printf("normal %f \n", ray->direction[i]);
+  //  }
+  //  for(int i = 0; i < 4; i++){
+  //      printf("inverted %f \n", ray_inv.direction[i]);
+  //  }
+
     //calculate discriminant
     point4 p;
     point(0.0, 0.0, 0.0, p);
     vect4 edge_to_ray;
-    sub_two_tuples(ray->origin, p, edge_to_ray);
+    sub_two_tuples(ray_inv.origin, p, edge_to_ray);
 
-    double a = vect4_dot(ray->direction, ray->direction);
-    double b = 2.0 * vect4_dot(ray->direction, edge_to_ray);
+    double a = vect4_dot(ray_inv.direction, ray_inv.direction);
+    double b = 2.0 * vect4_dot(ray_inv.direction, edge_to_ray);
     double c = vect4_dot(edge_to_ray, edge_to_ray) - 1.0;
 
     double disciminant = pow(b, 2) - (4.0 * a * c);
@@ -68,7 +84,6 @@ void sphere_intersect(sphere_t *sphere, ray_t *ray, intersections_t *res)
         res->xs[0].object = SPHERE;
         res->xs[1].object = SPHERE;
     }
-    
 }
 
 void rays_intersection(double a, sphere_t *shape, intersect_t *intersection)
@@ -77,36 +92,34 @@ void rays_intersection(double a, sphere_t *shape, intersect_t *intersection)
     intersection->object = shape->object;
 }
 
-void rays_intersections(intersect_t *intersections, size_t n_intersects, intersections_t *xs)
+void rays_intersections(intersect_t intersections[], size_t n_intersects, intersections_t *xs)
 {
     xs->count = n_intersects;
-    for(int i = 0; i < n_intersects; i++){
-        //printf("intersections t %f\n", intersections[i].t);
-        xs->xs[i].t = intersections[i].t;
-    }
+    qsort(intersections, n_intersects, sizeof(intersect_t), sort_compare);
+    memcpy(xs->xs, intersections, n_intersects*sizeof(intersect_t));
 }
 
 void rays_hit(intersections_t *xs, intersect_t *hit)
 {   
-
-    double t0_temp = xs->xs[0].t;
-    double t1_temp = xs->xs[1].t;
-
-    if((t0_temp > t1_temp)){
-        double temp = t0_temp;
-        t0_temp = t1_temp;
-        t1_temp = temp;
+    bool positive_found = false;
+    for(int i = 0; i < xs->count; i++){
+        if(xs->xs[i].t > 0.0){
+            hit->t = xs->xs[i].t;
+            hit->object = xs->xs[i].object;
+            positive_found = true;
+            break;
+        }
     }
-    if(t1_temp < 0.0){
+
+    if(!positive_found){
         hit->t = NAN;
         hit->object = 0;
     }
-    else if(t0_temp < 0.0){
-        hit->t = t1_temp;
-        hit->object = xs->xs[0].object;
-    }
-    else{
-        hit->t = t0_temp;
-        hit->object = xs->xs[0].object;
-    }
 }
+
+void rays_transform(ray_t *ray, matrix4 transform, ray_t *transformed_ray)
+{   
+    matrix4_vect3_mult(transform, ray->origin, transformed_ray->origin);
+    matrix4_vect3_mult(transform, ray->direction, transformed_ray->direction);
+}
+

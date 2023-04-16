@@ -19,3 +19,7 @@ add_test(transformations_test transformations_test_app)
 add_executable(rays_test_app rays_test.c)
 target_link_libraries(rays_test_app lib unity m)
 add_test(rays_test rays_test_app)
+
+add_executable(sphere_test_app sphere_test.c)
+target_link_libraries(sphere_test_app lib unity m)
+add_test(sphere_test sphere_test_app)
